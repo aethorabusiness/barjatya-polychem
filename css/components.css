@@ -1,10 +1,11 @@
 /* ==========================================================================
-   BARJATYA POLYCHEM (BP) - INDUSTRIAL COMPONENTS
-   Full-Viewport Hero Architecture, Wide Product Cards, Spec Tables & Forms
+   BARJATYA POLYCHEM (BP) - INDUSTRIAL COMPONENTS & SLIDERS
+   Editorial Hero Slider, Tactile Material Strip, Synchronized Product Showcase,
+   Application Rail, Process Timeline, and B2B Enquiry Forms
    ========================================================================== */
 
 /* ==========================================================================
-   1. HERO SECTION (REBUILT FOR PROPER VIEWPORT UTILIZATION)
+   1. EDITORIAL HERO SLIDER ARCHITECTURE
    ========================================================================== */
 
 .hero-industrial {
@@ -13,7 +14,7 @@
   position: relative;
   overflow: hidden;
   border-bottom: 4px solid var(--color-brand);
-  min-height: clamp(640px, 75vh, 820px);
+  min-height: clamp(640px, 78vh, 840px);
   display: flex;
   align-items: center;
 }
@@ -24,15 +25,15 @@
   margin-left: auto;
   margin-right: auto;
   padding-left: clamp(20px, 4vw, 64px);
-  padding-right: 0; /* Let image touch right margin on wide displays */
+  padding-right: clamp(20px, 4vw, 64px);
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1.15fr; /* 46% text, 54% image */
+  grid-template-columns: 1fr 1.2fr; /* 45% text, 55% image slider */
   align-items: stretch;
-  min-height: clamp(620px, 72vh, 800px);
-  gap: clamp(32px, 4vw, 64px);
+  min-height: clamp(580px, 72vh, 760px);
+  gap: clamp(36px, 5vw, 72px);
 }
 
 .hero-content {
@@ -45,7 +46,7 @@
 
 .hero-content h1 {
   color: var(--color-white);
-  font-size: clamp(2.6rem, 4.4vw, 4.4rem);
+  font-size: clamp(2.6rem, 4.4vw, 4.2rem);
   font-weight: 800;
   line-height: 1.12;
   margin-bottom: 22px;
@@ -58,11 +59,11 @@
 }
 
 .hero-lead {
-  font-size: clamp(1.125rem, 1.3vw, 1.28rem);
+  font-size: clamp(1.125rem, 1.3vw, 1.25rem);
   line-height: 1.7;
   color: var(--color-gray-200);
   margin-bottom: 34px;
-  max-width: 640px;
+  max-width: 600px;
 }
 
 .hero-actions {
@@ -70,14 +71,14 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .hero-trust-strip {
   display: flex;
   align-items: center;
-  gap: 28px;
-  padding-top: 28px;
+  gap: 24px;
+  padding-top: 26px;
   border-top: 1px solid var(--color-dark-700);
   flex-wrap: wrap;
 }
@@ -87,58 +88,306 @@
   align-items: center;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 0.84rem;
   color: var(--color-gray-300);
   font-weight: 500;
 }
 
 .hero-trust-item svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: var(--color-brand-light);
   flex-shrink: 0;
 }
 
-.hero-visual {
+/* Editorial Slider Stage */
+.hero-slider-stage {
   position: relative;
-  overflow: hidden;
   height: 100%;
-  min-height: 480px;
-  border-left: 1px solid var(--color-dark-700);
+  min-height: 520px;
+  overflow: hidden;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--color-dark-700);
+  background-color: var(--color-dark-950);
 }
 
-.hero-visual img {
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(30px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.35, 1), transform 0.8s cubic-bezier(0.25, 1, 0.35, 1), visibility 0.8s;
+  z-index: 1;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  z-index: 2;
+}
+
+.hero-slide.prev {
+  transform: translateX(-30px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hero-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition: transform 6s ease-out;
 }
 
-.hero-visual::after {
+.hero-slide.active img {
+  transform: scale(1.03);
+}
+
+.hero-slide::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(17, 21, 19, 0.75) 0%, rgba(17, 21, 19, 0.1) 35%, transparent 100%);
+  background: linear-gradient(to top, rgba(17, 21, 19, 0.85) 0%, rgba(17, 21, 19, 0.2) 50%, transparent 100%);
   pointer-events: none;
 }
 
-.hero-image-caption {
+/* Dynamic Slide Label */
+.hero-slide-meta {
   position: absolute;
-  bottom: 24px;
-  right: 24px;
-  background-color: rgba(17, 21, 19, 0.9);
-  backdrop-filter: blur(4px);
-  padding: 10px 18px;
+  top: 24px;
+  left: 24px;
+  background-color: rgba(17, 21, 19, 0.85);
+  backdrop-filter: blur(6px);
+  padding: 8px 16px;
   border-left: 3px solid var(--color-brand);
   border-radius: var(--radius-xs);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
-  color: var(--color-gray-200);
-  z-index: 3;
+  font-weight: 600;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  z-index: 4;
+}
+
+.hero-slide-caption {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 180px;
+  z-index: 4;
+  color: var(--color-white);
+}
+
+.hero-slide-caption h3 {
+  color: var(--color-white);
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.hero-slide-caption p {
+  font-size: 0.875rem;
+  color: var(--color-gray-300);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Editorial Slider Controls (Counter + Progress + Arrows) */
+.hero-slider-controls {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: rgba(17, 21, 19, 0.9);
+  backdrop-filter: blur(6px);
+  padding: 10px 16px;
+  border: 1px solid var(--color-dark-700);
+  border-radius: var(--radius-xs);
+}
+
+.hero-counter {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand-light);
+  letter-spacing: 0.05em;
+}
+
+.hero-counter-total {
+  color: var(--color-gray-500);
+}
+
+.hero-nav-btn {
+  background: none;
+  border: 1px solid var(--color-dark-600);
+  color: var(--color-white);
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.hero-nav-btn:hover {
+  background-color: var(--color-brand);
+  border-color: var(--color-brand);
+  color: var(--color-white);
+}
+
+.hero-nav-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* ==========================================================================
-   2. PRODUCT CARDS & GRID
+   2. TACTILE MATERIAL STRIP (BELOW HERO)
+   ========================================================================== */
+
+.material-strip {
+  width: 100%;
+  background-color: var(--color-dark-950);
+  border-bottom: 1px solid var(--color-dark-700);
+  padding: 14px 0;
+  overflow: hidden;
+}
+
+.material-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.material-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.material-tag-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-brand);
+}
+
+/* ==========================================================================
+   3. SYNCHRONIZED MASTERBATCH PRODUCT SHOWCASE (HOMEPAGE)
+   ========================================================================== */
+
+.product-showcase-wrapper {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(32px, 4.5vw, 64px);
+  align-items: stretch;
+  margin-top: 36px;
+}
+
+.product-showcase-visual {
+  position: relative;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  min-height: 480px;
+  background-color: var(--color-gray-100);
+  box-shadow: var(--shadow-md);
+}
+
+.product-showcase-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.02);
+  transition: opacity 0.55s ease, transform 0.55s ease, visibility 0.55s;
+}
+
+.product-showcase-img.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+.product-showcase-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.product-tab-item {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-border);
+  border-radius: var(--radius-xs);
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.product-tab-item:hover,
+.product-tab-item.active {
+  border-color: var(--color-brand);
+  border-left-color: var(--color-brand);
+  background-color: var(--color-brand-tint);
+  transform: translateX(4px);
+}
+
+.product-tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.product-tab-title {
+  font-family: var(--font-heading);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  color: var(--color-dark-900);
+}
+
+.product-tab-num {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-brand-dark);
+}
+
+.product-tab-desc {
+  font-size: 0.9375rem;
+  color: var(--color-gray-600);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.product-tab-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ==========================================================================
+   4. PRODUCT CARDS (PRODUCT DETAIL PAGES)
    ========================================================================== */
 
 .product-grid {
@@ -160,7 +409,7 @@
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
   border-color: var(--color-brand);
 }
@@ -180,7 +429,7 @@
 }
 
 .product-card:hover .product-card-thumb img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .product-card-badge {
@@ -266,7 +515,7 @@
 }
 
 /* ==========================================================================
-   3. TECHNICAL SPECIFICATION TABLES
+   5. TECHNICAL SPECIFICATION TABLES (FACT-BASED)
    ========================================================================== */
 
 .spec-table-wrapper {
@@ -320,7 +569,7 @@
 }
 
 /* ==========================================================================
-   4. MANUFACTURING PROCESS JOURNEY & INFRASTRUCTURE
+   6. MANUFACTURING PROCESS TIMELINE & EQUIPMENT
    ========================================================================== */
 
 .process-journey {
@@ -377,7 +626,7 @@
   margin-bottom: 0;
 }
 
-/* Equipment Feature Grid */
+/* Equipment Grid */
 .equipment-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -439,52 +688,9 @@
 }
 
 /* ==========================================================================
-   5. LABORATORY & TESTING SPLIT SECTION
+   7. APPLICATIONS CAROUSEL / RAIL & MATRIX
    ========================================================================== */
 
-.lab-split-section {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(36px, 5vw, 64px);
-  align-items: center;
-  width: 100%;
-}
-
-.lab-test-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-top: 28px;
-}
-
-.lab-test-item {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-brand);
-  padding: 18px;
-  border-radius: var(--radius-xs);
-}
-
-.lab-test-title {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-dark-900);
-  margin-bottom: 6px;
-}
-
-.lab-test-desc {
-  font-size: 0.84rem;
-  color: var(--color-gray-600);
-  margin-bottom: 0;
-  line-height: 1.5;
-}
-
-/* ==========================================================================
-   6. APPLICATIONS & INDUSTRIES MATRIX
-   ========================================================================== */
-
-/* Filter Bar */
 .app-filter-tabs {
   display: flex;
   align-items: center;
@@ -503,6 +709,7 @@
   color: var(--color-dark-800);
   cursor: pointer;
   transition: all var(--transition-fast);
+  min-height: 44px;
 }
 
 .app-filter-btn:hover {
@@ -578,7 +785,7 @@
 }
 
 /* ==========================================================================
-   7. GLOBAL REACH & EXPORT CORRIDORS
+   8. EXPORT CORRIDORS & GLOBAL REACH
    ========================================================================== */
 
 .export-corridor-grid {
@@ -622,7 +829,7 @@
 }
 
 /* ==========================================================================
-   8. B2B ENQUIRY & RFQ FORMS
+   9. B2B ENQUIRY & RFQ FORMS
    ========================================================================== */
 
 .inquiry-form-card {
@@ -708,7 +915,7 @@ textarea.form-control {
 }
 
 /* ==========================================================================
-   9. CONTACT DIRECTORY CARDS
+   10. CONTACT DIRECTORY CARDS
    ========================================================================== */
 
 .contact-info-grid {
@@ -758,13 +965,10 @@ textarea.form-control {
 }
 
 /* ==========================================================================
-   10. RESPONSIVE MEDIA QUERIES FOR COMPONENTS
+   11. RESPONSIVE BREAKPOINTS
    ========================================================================== */
 
 @media (max-width: 1180px) {
-  .hero-wrapper-wide {
-    padding-right: clamp(20px, 4vw, 64px);
-  }
   .hero-grid {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -772,17 +976,17 @@ textarea.form-control {
   .hero-content {
     padding: 60px 0 32px 0;
   }
-  .hero-visual {
-    height: 440px;
-    border-left: none;
-    border-radius: var(--radius-xs);
+  .hero-slider-stage {
+    min-height: 440px;
+  }
+  .product-showcase-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .product-showcase-visual {
+    min-height: 380px;
   }
   .process-journey {
     grid-template-columns: repeat(3, 1fr);
-  }
-  .lab-split-section {
-    grid-template-columns: 1fr;
-    gap: 36px;
   }
   .export-corridor-grid {
     grid-template-columns: 1fr;
@@ -790,17 +994,22 @@ textarea.form-control {
 }
 
 @media (max-width: 768px) {
+  .hero-slider-stage {
+    min-height: 340px;
+  }
+  .hero-slide-caption {
+    right: 24px;
+    bottom: 80px;
+  }
+  .hero-slider-controls {
+    bottom: 16px;
+    right: 16px;
+  }
   .process-journey {
     grid-template-columns: 1fr;
   }
   .form-grid-2 {
     grid-template-columns: 1fr;
-  }
-  .lab-test-list {
-    grid-template-columns: 1fr;
-  }
-  .hero-visual {
-    height: 320px;
   }
   .spec-table th,
   .spec-table td {

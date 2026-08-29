@@ -1,7 +1,7 @@
 /* ==========================================================================
-   BARJATYA POLYCHEM (BP) - MODERN INDUSTRIAL DESIGN SYSTEM
-   Authentic B2B Manufacturing Architecture | Full Viewport Fluid Layout
-   Brand Colors: Olive/Yellow-Green (#7D9A10), White (#FFFFFF), Deep Slate/Charcoal (#111513)
+   BARJATYA POLYCHEM (BP) - INDUSTRIAL DESIGN SYSTEM & CORE STYLES
+   Authentic B2B Polymer Manufacturing | Fluid Viewport System
+   Palette: Olive-Green (#7D9A10), White (#FFFFFF), Deep Slate Charcoal (#111513)
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -51,20 +51,19 @@
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-lg: 8px;
   
-  /* Fast Industrial Transitions */
+  /* Transitions */
   --transition-fast: 0.15s ease;
-  --transition-base: 0.22s ease;
-  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 0.25s ease;
+  --transition-slider: 0.75s cubic-bezier(0.25, 1, 0.35, 1);
   
-  /* Clean Shadows */
+  /* Shadows */
   --shadow-sm: 0 1px 3px rgba(11, 14, 12, 0.05);
   --shadow-md: 0 4px 14px rgba(11, 14, 12, 0.08);
   --shadow-lg: 0 12px 28px rgba(11, 14, 12, 0.12);
 }
 
-/* Base Reset & Box Sizing */
+/* Base Reset */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -79,7 +78,7 @@ html {
 
 body {
   font-family: var(--font-primary);
-  font-size: 1.0625rem; /* 17px base for excellent legibility */
+  font-size: 1.0625rem; /* 17px base */
   line-height: 1.65;
   color: var(--color-dark-900);
   background-color: var(--color-white);
@@ -88,7 +87,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Hierarchy - Large & Readable */
+/* Typography Hierarchy */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--color-dark-900);
@@ -98,7 +97,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  font-size: clamp(2.4rem, 4.4vw, 4.2rem);
   font-weight: 700;
   letter-spacing: -0.025em;
 }
@@ -212,15 +211,11 @@ img {
   background-color: var(--color-brand-tint);
 }
 
-/* Section Headers - Strong Left-Aligned Industrial Style */
+/* Section Headers */
 .section-header {
   margin-bottom: clamp(36px, 4vw, 56px);
   max-width: 860px;
-}
-
-.section-header.text-center {
-  text-align: left; /* Favor left alignment per industrial UI rules */
-  max-width: 900px;
+  text-align: left;
 }
 
 .section-eyebrow {
@@ -257,7 +252,7 @@ img {
   margin-bottom: 0;
 }
 
-/* Buttons & CTAs */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -266,7 +261,6 @@ img {
   font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
   padding: 13px 26px;
   border-radius: var(--radius-xs);
   border: 1px solid transparent;
@@ -346,7 +340,7 @@ img {
 }
 
 /* ==========================================================================
-   SINGLE CLEAN NAVIGATION HEADER (NO DUPLICATE TOP BARS)
+   SINGLE CLEAN NAVIGATION HEADER
    ========================================================================== */
 
 .site-header {
@@ -482,7 +476,7 @@ img {
   transform: rotate(180deg);
 }
 
-/* Clean Industrial Dropdown */
+/* Clean Dropdown */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -847,7 +841,7 @@ img {
   background-color: var(--color-white);
   z-index: 2000;
   box-shadow: -12px 0 32px rgba(0, 0, 0, 0.25);
-  transition: right var(--transition-smooth);
+  transition: right var(--transition-slider);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -872,6 +866,11 @@ img {
   border-radius: var(--radius-xs);
   cursor: pointer;
   color: var(--color-dark-900);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile-nav-content {
@@ -937,10 +936,7 @@ img {
   visibility: visible;
 }
 
-/* ==========================================================================
-   MODAL DIALOG (RFQ & SAMPLE REQUEST)
-   ========================================================================== */
-
+/* Modal Dialog */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -997,16 +993,28 @@ img {
   cursor: pointer;
   color: var(--color-gray-500);
   line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-body {
   padding: 28px;
 }
 
-/* ==========================================================================
-   RESPONSIVE BREAKPOINTS
-   ========================================================================== */
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
+/* Responsive Breakpoints */
 @media (max-width: 1180px) {
   .main-nav {
     display: none;
@@ -1016,6 +1024,8 @@ img {
   }
   .mobile-toggle-btn {
     display: block;
+    min-width: 44px;
+    min-height: 44px;
   }
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);

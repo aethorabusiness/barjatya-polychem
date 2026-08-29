@@ -1,11 +1,14 @@
 /**
  * BARJATYA POLYCHEM (BP) - INDUSTRIAL CORE JAVASCRIPT
- * Professional interaction logic for B2B portal, RFQ modal, Application Matrix & Navigation
+ * Professional interaction engine: Editorial Hero Slider, Synchronized Product Showcase,
+ * Application Matrix, B2B RFQ Controller & Touch Handlers
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initMobileNav();
+  initHeroSlider();
+  initProductShowcase();
   initStatsCounter();
   initRfqModal();
   initApplicationFilter();
@@ -65,7 +68,7 @@ function initMobileNav() {
     }
   });
 
-  // Mobile Accordion Items
+  // Mobile Accordions
   const accordionTriggers = drawer.querySelectorAll('.mobile-accordion-btn');
   accordionTriggers.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -79,7 +82,161 @@ function initMobileNav() {
 }
 
 /* --------------------------------------------------------------------------
-   3. ANIMATED STATISTICS COUNTER
+   3. EDITORIAL HERO IMAGE SLIDER WITH TOUCH SWIPE & ACCESSIBILITY
+   -------------------------------------------------------------------------- */
+function initHeroSlider() {
+  const stage = document.querySelector('.hero-slider-stage');
+  if (!stage) return;
+
+  const slides = stage.querySelectorAll('.hero-slide');
+  const currentCounter = document.querySelector('#heroSlideCurrent');
+  const totalCounter = document.querySelector('#heroSlideTotal');
+  const prevBtn = document.querySelector('#heroSliderPrev');
+  const nextBtn = document.querySelector('#heroSliderNext');
+
+  if (!slides.length) return;
+
+  let currentIndex = 0;
+  const totalSlides = slides.length;
+  let autoplayTimer = null;
+  const autoplayDuration = 6000; // 6 seconds per slide
+
+  if (totalCounter) {
+    totalCounter.textContent = totalSlides < 10 ? `0${totalSlides}` : `${totalSlides}`;
+  }
+
+  const updateSlide = (newIndex, direction = 'next') => {
+    slides.forEach((slide, idx) => {
+      slide.classList.remove('active', 'prev');
+      if (idx === newIndex) {
+        slide.classList.add('active');
+      } else if (idx === currentIndex) {
+        slide.classList.add('prev');
+      }
+    });
+
+    currentIndex = newIndex;
+
+    if (currentCounter) {
+      const displayNum = currentIndex + 1;
+      currentCounter.textContent = displayNum < 10 ? `0${displayNum}` : `${displayNum}`;
+    }
+  };
+
+  const nextSlide = () => {
+    const nextIdx = (currentIndex + 1) % totalSlides;
+    updateSlide(nextIdx, 'next');
+  };
+
+  const prevSlide = () => {
+    const prevIdx = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateSlide(prevIdx, 'prev');
+  };
+
+  // Autoplay handler
+  const startAutoplay = () => {
+    // Respect reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    stopAutoplay();
+    autoplayTimer = setInterval(nextSlide, autoplayDuration);
+  };
+
+  const stopAutoplay = () => {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  };
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      startAutoplay();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      startAutoplay();
+    });
+  }
+
+  // Pause on hover or keyboard focus
+  stage.addEventListener('mouseenter', stopAutoplay);
+  stage.addEventListener('mouseleave', startAutoplay);
+  stage.addEventListener('focusin', stopAutoplay);
+  stage.addEventListener('focusout', startAutoplay);
+
+  // Keyboard navigation
+  stage.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      nextSlide();
+      startAutoplay();
+    } else if (e.key === 'ArrowLeft') {
+      prevSlide();
+      startAutoplay();
+    }
+  });
+
+  // Touch Swipe Handling (Mobile / Tablet)
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  stage.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    stopAutoplay();
+  }, { passive: true });
+
+  stage.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const swipeDistance = touchEndX - touchStartX;
+    if (Math.abs(swipeDistance) > 45) {
+      if (swipeDistance < 0) {
+        nextSlide(); // Swiped left -> Next
+      } else {
+        prevSlide(); // Swiped right -> Prev
+      }
+    }
+    startAutoplay();
+  }, { passive: true });
+
+  // Initialize first slide and start timer
+  updateSlide(0);
+  startAutoplay();
+}
+
+/* --------------------------------------------------------------------------
+   4. SYNCHRONIZED PRODUCT SHOWCASE (HOMEPAGE)
+   -------------------------------------------------------------------------- */
+function initProductShowcase() {
+  const tabItems = document.querySelectorAll('.product-tab-item');
+  const showcaseImgs = document.querySelectorAll('.product-showcase-img');
+
+  if (!tabItems.length || !showcaseImgs.length) return;
+
+  tabItems.forEach((tab, index) => {
+    const activateTab = () => {
+      tabItems.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const targetId = tab.getAttribute('data-product-target');
+      showcaseImgs.forEach(img => {
+        if (img.getAttribute('data-product-id') === targetId) {
+          img.classList.add('active');
+        } else {
+          img.classList.remove('active');
+        }
+      });
+    };
+
+    tab.addEventListener('click', activateTab);
+    tab.addEventListener('mouseenter', activateTab);
+  });
+}
+
+/* --------------------------------------------------------------------------
+   5. ANIMATED STATISTICS COUNTER
    -------------------------------------------------------------------------- */
 function initStatsCounter() {
   const statElements = document.querySelectorAll('.stat-number[data-count]');
@@ -97,7 +254,6 @@ function initStatsCounter() {
         const updateCounter = (currentTime) => {
           const elapsed = currentTime - startTime;
           const progress = Math.min(elapsed / duration, 1);
-          // Ease-out curve
           const easeOut = 1 - Math.pow(1 - progress, 3);
           const current = start + (target - start) * easeOut;
 
@@ -124,7 +280,7 @@ function initStatsCounter() {
 }
 
 /* --------------------------------------------------------------------------
-   4. RFQ / SAMPLE REQUEST MODAL CONTROLLER
+   6. RFQ / SAMPLE REQUEST MODAL CONTROLLER
    -------------------------------------------------------------------------- */
 function initRfqModal() {
   const modal = document.querySelector('#rfqModal');
@@ -138,7 +294,6 @@ function initRfqModal() {
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
     if (productSelect && productName) {
-      // Find matching option
       Array.from(productSelect.options).forEach(opt => {
         if (opt.value.toLowerCase().includes(productName.toLowerCase()) || 
             opt.text.toLowerCase().includes(productName.toLowerCase())) {
@@ -177,7 +332,7 @@ function initRfqModal() {
 }
 
 /* --------------------------------------------------------------------------
-   5. INTERACTIVE APPLICATION FILTER MATRIX
+   7. INTERACTIVE APPLICATION FILTER MATRIX
    -------------------------------------------------------------------------- */
 function initApplicationFilter() {
   const filterButtons = document.querySelectorAll('.app-filter-btn');
@@ -189,11 +344,9 @@ function initApplicationFilter() {
     btn.addEventListener('click', () => {
       const filter = btn.getAttribute('data-filter');
 
-      // Update active button state
       filterButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Filter cards
       appCards.forEach(card => {
         const categories = (card.getAttribute('data-category') || '').split(' ');
         if (filter === 'all' || categories.includes(filter)) {
@@ -207,7 +360,7 @@ function initApplicationFilter() {
 }
 
 /* --------------------------------------------------------------------------
-   6. B2B ENQUIRY & RFQ FORM SUBMISSION HANDLER
+   8. B2B ENQUIRY & RFQ FORM SUBMISSION HANDLER
    -------------------------------------------------------------------------- */
 function initInquiryForms() {
   const forms = document.querySelectorAll('form[data-b2b-form]');
@@ -220,7 +373,6 @@ function initInquiryForms() {
       const originalText = submitBtn ? submitBtn.innerHTML : 'Submit Enquiry';
       const statusBox = form.querySelector('.form-status');
 
-      // Basic client-side validation
       const requiredInputs = form.querySelectorAll('[required]');
       let isValid = true;
 
@@ -246,7 +398,6 @@ function initInquiryForms() {
         submitBtn.innerHTML = 'Transmitting Enquiry...';
       }
 
-      // Simulate instantaneous enterprise dispatch
       setTimeout(() => {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -255,19 +406,17 @@ function initInquiryForms() {
 
         if (statusBox) {
           statusBox.className = 'form-status success';
-          statusBox.innerHTML = '<strong>Enquiry Transmitted Successfully.</strong><br>Our technical formulation team in Jaipur will review your requirements and respond within 24 hours. For urgent needs, call +91 9314657754.';
+          statusBox.innerHTML = '<strong>Enquiry Transmitted Successfully.</strong><br>Our technical formulation team in Jaipur will review your requirements and respond within 24 hours. For direct inquiries, call +91 9314657754.';
         }
 
         form.reset();
-
-        // If inside a modal, keep open briefly then optionally close
       }, 700);
     });
   });
 }
 
 /* --------------------------------------------------------------------------
-   7. SMOOTH SCROLL FOR IN-PAGE ANCHORS
+   9. SMOOTH SCROLL FOR IN-PAGE ANCHORS
    -------------------------------------------------------------------------- */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
