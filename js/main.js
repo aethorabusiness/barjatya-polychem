@@ -1,168 +1,125 @@
 /**
- * BARJATYA POLYCHEM (BP) - INDUSTRIAL CORE JAVASCRIPT
- * Professional interaction engine: Editorial Hero Slider, Synchronized Product Showcase,
- * Application Matrix, B2B RFQ Controller & Touch Handlers
+ * BARJATYA POLYCHEM (BP) - CORE APPLICATION & MOTION CONTROLLER
+ * High-performance, uninhibited native scrolling, IntersectionObserver reveals,
+ * Editorial Hero Slider, Synchronized Product Showcase, Sticky Manufacturing Story,
+ * and Application Rail.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initHeader();
-  initMobileNav();
+  'use strict';
+
+  // 1. Initialize Aeronex-Style Viewport Reveals
+  initScrollReveals();
+
+  // 2. Initialize Editorial Hero Image Slider
   initHeroSlider();
+
+  // 3. Initialize Synchronized Product Showcase (Homepage)
   initProductShowcase();
-  initStatsCounter();
+
+  // 4. Initialize Sticky Manufacturing Process Observer
+  initManufacturingObserver();
+
+  // 5. Initialize Horizontal Application Rail (Drag & Touch)
+  initAppRail();
+
+  // 6. Initialize Mobile Drawer & Navigation
+  initMobileNav();
+
+  // 7. Initialize RFQ Modal & B2B Inquiry Handlers
   initRfqModal();
-  initApplicationFilter();
   initInquiryForms();
-  initSmoothScroll();
 });
 
-/* --------------------------------------------------------------------------
-   1. STICKY HEADER & SCROLL BEHAVIOR
-   -------------------------------------------------------------------------- */
-function initHeader() {
-  const header = document.querySelector('.site-header');
-  if (!header) return;
+/**
+ * Viewport Reveal Observer (Aeronex-Style clip-path & text reveals)
+ */
+function initScrollReveals() {
+  const reveals = document.querySelectorAll('.reveal-image, .reveal-text');
+  if (!reveals.length) return;
 
-  const handleScroll = () => {
-    if (window.scrollY > 20) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
+  // Respect reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reveals.forEach(el => el.classList.add('is-revealed'));
+    return;
+  }
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -40px 0px',
+    threshold: 0.12
   };
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll();
-}
-
-/* --------------------------------------------------------------------------
-   2. MOBILE NAVIGATION DRAWER & ACCORDIONS
-   -------------------------------------------------------------------------- */
-function initMobileNav() {
-  const toggleBtn = document.querySelector('.mobile-toggle-btn');
-  const closeBtn = document.querySelector('.mobile-close-btn');
-  const drawer = document.querySelector('.mobile-nav-drawer');
-  const overlay = document.querySelector('.mobile-drawer-overlay');
-
-  if (!toggleBtn || !drawer || !overlay) return;
-
-  const openDrawer = () => {
-    drawer.classList.add('open');
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeDrawer = () => {
-    drawer.classList.remove('open');
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  };
-
-  toggleBtn.addEventListener('click', openDrawer);
-  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-  overlay.addEventListener('click', closeDrawer);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer.classList.contains('open')) {
-      closeDrawer();
-    }
-  });
-
-  // Mobile Accordions
-  const accordionTriggers = drawer.querySelectorAll('.mobile-accordion-btn');
-  accordionTriggers.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const parentItem = btn.closest('.mobile-nav-item');
-      if (parentItem) {
-        parentItem.classList.toggle('expanded');
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
       }
     });
-  });
+  }, observerOptions);
+
+  reveals.forEach(el => revealObserver.observe(el));
 }
 
-/* --------------------------------------------------------------------------
-   3. EDITORIAL HERO IMAGE SLIDER WITH TOUCH SWIPE & ACCESSIBILITY
-   -------------------------------------------------------------------------- */
+/**
+ * Editorial Hero Slider Engine (Stable text, rotating industrial visual)
+ */
 function initHeroSlider() {
   const stage = document.querySelector('.hero-slider-stage');
   if (!stage) return;
 
   const slides = stage.querySelectorAll('.hero-slide');
-  const currentCounter = document.querySelector('#heroSlideCurrent');
-  const totalCounter = document.querySelector('#heroSlideTotal');
-  const prevBtn = document.querySelector('#heroSliderPrev');
-  const nextBtn = document.querySelector('#heroSliderNext');
+  const currentCount = document.getElementById('heroSlideCurrent');
+  const totalCount = document.getElementById('heroSlideTotal');
+  const prevBtn = document.getElementById('heroSliderPrev');
+  const nextBtn = document.getElementById('heroSliderNext');
 
   if (!slides.length) return;
 
   let currentIndex = 0;
-  const totalSlides = slides.length;
   let autoplayTimer = null;
-  const autoplayDuration = 6000; // 6 seconds per slide
+  const slideCount = slides.length;
+  const AUTOPLAY_INTERVAL = 6000;
 
-  if (totalCounter) {
-    totalCounter.textContent = totalSlides < 10 ? `0${totalSlides}` : `${totalSlides}`;
+  if (totalCount) {
+    totalCount.textContent = String(slideCount).padStart(2, '0');
   }
 
-  const updateSlide = (newIndex, direction = 'next') => {
-    slides.forEach((slide, idx) => {
-      slide.classList.remove('active', 'prev');
-      if (idx === newIndex) {
-        slide.classList.add('active');
-      } else if (idx === currentIndex) {
-        slide.classList.add('prev');
-      }
-    });
+  function goToSlide(index) {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (index + slideCount) % slideCount;
+    slides[currentIndex].classList.add('active');
 
-    currentIndex = newIndex;
-
-    if (currentCounter) {
-      const displayNum = currentIndex + 1;
-      currentCounter.textContent = displayNum < 10 ? `0${displayNum}` : `${displayNum}`;
+    if (currentCount) {
+      currentCount.textContent = String(currentIndex + 1).padStart(2, '0');
     }
-  };
+  }
 
-  const nextSlide = () => {
-    const nextIdx = (currentIndex + 1) % totalSlides;
-    updateSlide(nextIdx, 'next');
-  };
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
 
-  const prevSlide = () => {
-    const prevIdx = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateSlide(prevIdx, 'prev');
-  };
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
 
-  // Autoplay handler
-  const startAutoplay = () => {
-    // Respect reduced motion preference
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function startAutoplay() {
     stopAutoplay();
-    autoplayTimer = setInterval(nextSlide, autoplayDuration);
-  };
+    autoplayTimer = setInterval(nextSlide, AUTOPLAY_INTERVAL);
+  }
 
-  const stopAutoplay = () => {
+  function stopAutoplay() {
     if (autoplayTimer) {
       clearInterval(autoplayTimer);
       autoplayTimer = null;
     }
-  };
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      nextSlide();
-      startAutoplay();
-    });
   }
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      prevSlide();
-      startAutoplay();
-    });
-  }
+  // Event Listeners
+  if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); startAutoplay(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); startAutoplay(); });
 
-  // Pause on hover or keyboard focus
   stage.addEventListener('mouseenter', stopAutoplay);
   stage.addEventListener('mouseleave', startAutoplay);
   stage.addEventListener('focusin', stopAutoplay);
@@ -170,16 +127,11 @@ function initHeroSlider() {
 
   // Keyboard navigation
   stage.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-      nextSlide();
-      startAutoplay();
-    } else if (e.key === 'ArrowLeft') {
-      prevSlide();
-      startAutoplay();
-    }
+    if (e.key === 'ArrowRight') { nextSlide(); startAutoplay(); }
+    if (e.key === 'ArrowLeft') { prevSlide(); startAutoplay(); }
   });
 
-  // Touch Swipe Handling (Mobile / Tablet)
+  // Mobile Touch Swipe
   let touchStartX = 0;
   let touchEndX = 0;
 
@@ -190,138 +142,212 @@ function initHeroSlider() {
 
   stage.addEventListener('touchend', (e) => {
     touchEndX = e.changedTouches[0].screenX;
-    const swipeDistance = touchEndX - touchStartX;
-    if (Math.abs(swipeDistance) > 45) {
-      if (swipeDistance < 0) {
-        nextSlide(); // Swiped left -> Next
-      } else {
-        prevSlide(); // Swiped right -> Prev
-      }
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
     }
     startAutoplay();
   }, { passive: true });
 
-  // Initialize first slide and start timer
-  updateSlide(0);
   startAutoplay();
 }
 
-/* --------------------------------------------------------------------------
-   4. SYNCHRONIZED PRODUCT SHOWCASE (HOMEPAGE)
-   -------------------------------------------------------------------------- */
+/**
+ * Synchronized Product Showcase (Homepage Tab-to-Image Controller)
+ */
 function initProductShowcase() {
-  const tabItems = document.querySelectorAll('.product-tab-item');
-  const showcaseImgs = document.querySelectorAll('.product-showcase-img');
+  const wrapper = document.querySelector('.product-showcase-wrapper');
+  if (!wrapper) return;
 
-  if (!tabItems.length || !showcaseImgs.length) return;
+  const tabs = wrapper.querySelectorAll('.product-tab-item');
+  const images = wrapper.querySelectorAll('.product-showcase-img');
 
-  tabItems.forEach((tab, index) => {
-    const activateTab = () => {
-      tabItems.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+  tabs.forEach(tab => {
+    tab.addEventListener('mouseenter', () => activateTab(tab));
+    tab.addEventListener('click', () => activateTab(tab));
+    tab.addEventListener('focus', () => activateTab(tab));
+  });
 
-      const targetId = tab.getAttribute('data-product-target');
-      showcaseImgs.forEach(img => {
-        if (img.getAttribute('data-product-id') === targetId) {
-          img.classList.add('active');
-        } else {
-          img.classList.remove('active');
+  function activateTab(activeTab) {
+    const target = activeTab.dataset.productTarget;
+    if (!target) return;
+
+    tabs.forEach(t => t.classList.remove('active'));
+    activeTab.classList.add('active');
+
+    images.forEach(img => {
+      if (img.dataset.productId === target) {
+        img.classList.add('active');
+      } else {
+        img.classList.remove('active');
+      }
+    });
+  }
+}
+
+/**
+ * Sticky Manufacturing Step Observer (Homepage / Manufacturing Page)
+ */
+function initManufacturingObserver() {
+  const steps = document.querySelectorAll('.mfg-step-card');
+  const stickyMediaImg = document.querySelector('.manufacturing-sticky-media img');
+  if (!steps.length || !stickyMediaImg) return;
+
+  const stepImages = [
+    'assets/images/plant_extrusion.jpg',
+    'assets/images/plant_extrusion.jpg',
+    'assets/images/plant_extrusion.jpg',
+    'assets/images/colour_masterbatch.jpg',
+    'assets/images/quality_laboratory.jpg',
+    'assets/images/white_masterbatch.jpg'
+  ];
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        steps.forEach(s => s.classList.remove('active'));
+        entry.target.classList.add('active');
+
+        const stepIndex = parseInt(entry.target.dataset.stepIndex || '0', 10);
+        if (stepImages[stepIndex]) {
+          stickyMediaImg.src = stepImages[stepIndex];
         }
-      });
-    };
+      }
+    });
+  }, { threshold: 0.6 });
 
-    tab.addEventListener('click', activateTab);
-    tab.addEventListener('mouseenter', activateTab);
+  steps.forEach(step => observer.observe(step));
+}
+
+/**
+ * Horizontal Application Rail with Mouse Drag and Touch Scroll
+ */
+function initAppRail() {
+  const track = document.querySelector('.app-rail-track');
+  if (!track) return;
+
+  const prevBtn = document.getElementById('appRailPrev');
+  const nextBtn = document.getElementById('appRailNext');
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -340, behavior: 'smooth' });
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: 340, behavior: 'smooth' });
+    });
+  }
+
+  // Mouse Drag support
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    track.style.cursor = 'grabbing';
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+
+  track.addEventListener('mouseleave', () => {
+    isDown = false;
+    track.style.cursor = 'grab';
+  });
+
+  track.addEventListener('mouseup', () => {
+    isDown = false;
+    track.style.cursor = 'grab';
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    track.scrollLeft = scrollLeft - walk;
   });
 }
 
-/* --------------------------------------------------------------------------
-   5. ANIMATED STATISTICS COUNTER
-   -------------------------------------------------------------------------- */
-function initStatsCounter() {
-  const statElements = document.querySelectorAll('.stat-number[data-count]');
-  if (!statElements.length) return;
+/**
+ * Mobile Navigation Drawer
+ */
+function initMobileNav() {
+  const toggleBtn = document.querySelector('.mobile-toggle-btn');
+  const closeBtn = document.querySelector('.mobile-close-btn');
+  const drawer = document.querySelector('.mobile-nav-drawer');
+  const overlay = document.querySelector('.mobile-drawer-overlay');
 
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseFloat(el.getAttribute('data-count'));
-        const duration = 1200; // ms
-        const start = 0;
-        const startTime = performance.now();
+  if (!toggleBtn || !drawer || !overlay) return;
 
-        const updateCounter = (currentTime) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const easeOut = 1 - Math.pow(1 - progress, 3);
-          const current = start + (target - start) * easeOut;
+  function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
 
-          if (Number.isInteger(target)) {
-            el.textContent = Math.floor(current).toLocaleString();
-          } else {
-            el.textContent = current.toFixed(1);
-          }
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
 
-          if (progress < 1) {
-            requestAnimationFrame(updateCounter);
-          } else {
-            el.textContent = target.toLocaleString();
-          }
-        };
+  toggleBtn.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
 
-        requestAnimationFrame(updateCounter);
-        obs.unobserve(el);
+  // Accordion inside mobile drawer
+  const accordions = drawer.querySelectorAll('.mobile-accordion-btn');
+  accordions.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const subMenu = btn.nextElementSibling;
+      if (subMenu) {
+        subMenu.classList.toggle('open');
       }
     });
-  }, { threshold: 0.2 });
-
-  statElements.forEach(el => observer.observe(el));
+  });
 }
 
-/* --------------------------------------------------------------------------
-   6. RFQ / SAMPLE REQUEST MODAL CONTROLLER
-   -------------------------------------------------------------------------- */
+/**
+ * RFQ Modal Dialog Handlers
+ */
 function initRfqModal() {
-  const modal = document.querySelector('#rfqModal');
+  const modal = document.getElementById('rfqModal');
   if (!modal) return;
 
-  const openTriggers = document.querySelectorAll('[data-open-rfq]');
   const closeBtn = modal.querySelector('.modal-close-btn');
-  const productSelect = modal.querySelector('#rfqProductSelect');
+  const openButtons = document.querySelectorAll('[data-open-rfq]');
+  const productSelect = document.getElementById('rfqProductSelect');
 
-  const openModal = (productName = '') => {
+  function openModal(prefillProduct = '') {
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    if (productSelect && productName) {
-      Array.from(productSelect.options).forEach(opt => {
-        if (opt.value.toLowerCase().includes(productName.toLowerCase()) || 
-            opt.text.toLowerCase().includes(productName.toLowerCase())) {
-          opt.selected = true;
-        }
-      });
+    if (productSelect && prefillProduct) {
+      productSelect.value = prefillProduct;
     }
-  };
+  }
 
-  const closeModal = () => {
+  function closeModal() {
     modal.classList.remove('open');
     document.body.style.overflow = '';
-  };
+  }
 
-  openTriggers.forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
+  openButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const product = trigger.getAttribute('data-product') || '';
-      openModal(product);
+      const prod = btn.getAttribute('data-product') || '';
+      openModal(prod);
     });
   });
 
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
+    if (e.target === modal) closeModal();
   });
 
   document.addEventListener('keydown', (e) => {
@@ -331,105 +357,34 @@ function initRfqModal() {
   });
 }
 
-/* --------------------------------------------------------------------------
-   7. INTERACTIVE APPLICATION FILTER MATRIX
-   -------------------------------------------------------------------------- */
-function initApplicationFilter() {
-  const filterButtons = document.querySelectorAll('.app-filter-btn');
-  const appCards = document.querySelectorAll('.app-card, .app-matrix-card');
-
-  if (!filterButtons.length || !appCards.length) return;
-
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.getAttribute('data-filter');
-
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      appCards.forEach(card => {
-        const categories = (card.getAttribute('data-category') || '').split(' ');
-        if (filter === 'all' || categories.includes(filter)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
-}
-
-/* --------------------------------------------------------------------------
-   8. B2B ENQUIRY & RFQ FORM SUBMISSION HANDLER
-   -------------------------------------------------------------------------- */
+/**
+ * B2B RFQ Form Submission Simulator
+ */
 function initInquiryForms() {
-  const forms = document.querySelectorAll('form[data-b2b-form]');
-  
+  const forms = document.querySelectorAll('[data-b2b-form]');
   forms.forEach(form => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const statusBox = form.closest('.modal-body, .section')?.querySelector('.form-status') || form.querySelector('.form-status');
       
       const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn ? submitBtn.innerHTML : 'Submit Enquiry';
-      const statusBox = form.querySelector('.form-status');
-
-      const requiredInputs = form.querySelectorAll('[required]');
-      let isValid = true;
-
-      requiredInputs.forEach(input => {
-        if (!input.value.trim()) {
-          isValid = false;
-          input.style.borderColor = '#C0392B';
-        } else {
-          input.style.borderColor = '';
-        }
-      });
-
-      if (!isValid) {
-        if (statusBox) {
-          statusBox.className = 'form-status error';
-          statusBox.textContent = 'Please fill out all mandatory fields.';
-        }
-        return;
-      }
-
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Transmitting Enquiry...';
+        submitBtn.textContent = 'Transmitting Inquiry...';
       }
 
       setTimeout(() => {
+        if (statusBox) {
+          statusBox.textContent = 'Thank you. Your technical requirement has been submitted to the Barjatya Polychem formulation desk. Our engineering team will review and contact you with specifications and sample availability.';
+          statusBox.className = 'form-status success';
+          statusBox.style.display = 'block';
+        }
+        form.reset();
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
+          submitBtn.textContent = 'Transmit Enquiry';
         }
-
-        if (statusBox) {
-          statusBox.className = 'form-status success';
-          statusBox.innerHTML = '<strong>Enquiry Transmitted Successfully.</strong><br>Our technical formulation team in Jaipur will review your requirements and respond within 24 hours. For direct inquiries, call +91 9314657754.';
-        }
-
-        form.reset();
       }, 700);
-    });
-  });
-}
-
-/* --------------------------------------------------------------------------
-   9. SMOOTH SCROLL FOR IN-PAGE ANCHORS
-   -------------------------------------------------------------------------- */
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      const targetEl = document.querySelector(targetId);
-      if (targetEl) {
-        e.preventDefault();
-        targetEl.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
     });
   });
 }

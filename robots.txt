@@ -1,0 +1,10 @@
+# robots.txt for Barjatya Polychem
+# Official Domain: https://barjatyapolychem.com
+
+User-agent: *
+Allow: /
+Disallow: /scratch/
+Disallow: /.system_generated/
+
+# Sitemaps
+Sitemap: https://barjatyapolychem.com/sitemap.xml
