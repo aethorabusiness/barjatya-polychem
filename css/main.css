@@ -274,16 +274,16 @@ img {
   right: 0;
   z-index: 1000;
   background-color: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              backdrop-filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .site-header.header-scrolled,
 .site-header.header-solid {
-  background-color: rgba(10, 15, 29, 0.94);
+  background-color: rgba(10, 15, 29, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -298,6 +298,59 @@ img {
   gap: 24px;
 }
 
+/* White Brand Block */
+.brand-block-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #FFFFFF;
+  padding: 8px 18px;
+  border-radius: var(--radius-xs);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  border-left: 3px solid var(--color-brand);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+
+.brand-block-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+}
+
+.brand-block-link .brand-logo-img,
+.brand-block-link .logo-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-block-link .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-block-link .logo-name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-dark-900);
+}
+
+.brand-block-link .logo-sub {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gray-600);
+  margin-top: 2px;
+}
+
+/* Legacy Brand Logo support */
 .brand-logo {
   display: flex;
   align-items: center;
@@ -305,41 +358,14 @@ img {
   text-decoration: none;
   color: var(--color-white);
   flex-shrink: 0;
-  transition: opacity var(--transition-fast);
-}
-
-.brand-logo:hover {
-  opacity: 0.95;
 }
 
 .brand-logo-img,
 .logo-img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  display: block;
-  flex-shrink: 0;
-  transition: transform var(--transition-fast);
-}
-
-.brand-logo:hover .brand-logo-img,
-.brand-logo:hover .logo-img {
-  transform: scale(1.05);
-}
-
-.logo-symbol {
   width: 44px;
   height: 44px;
-  background-color: var(--color-dark-900);
-  color: var(--color-brand-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 1.25rem;
-  border-radius: var(--radius-xs);
-  border-bottom: 3px solid var(--color-brand);
+  object-fit: contain;
+  display: block;
 }
 
 .logo-text {
