@@ -1,9 +1,8 @@
 /**
  * BARJATYA POLYCHEM (BP) - CORE APPLICATION & MOTION CONTROLLER
- * Homepage V2 Video-First Industrial Experience Engine
- * Fast native scrolling, synchronized 4-scene hero video sequencer,
- * transparent-to-solid header, interactive product presentation,
- * sticky manufacturing storytelling, and horizontal application rail.
+ * Video-First Polymer Material Experience Engine
+ * Fast native scrolling, poster-to-video smooth fade, transparent-to-solid header,
+ * interactive product presentation, sticky manufacturing storytelling, and horizontal application rail.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize Viewport Reveals
   initScrollReveals();
 
-  // 2. Initialize Full-Screen Hero Video 4-Scene Sequencer
-  initHeroVideoSequencer();
+  // 2. Initialize Full-Screen Polymer Video Hero
+  initHeroVideo();
 
   // 3. Initialize Transparent-to-Solid Header & Hero Scroll Depth
   initScrollHeader();
@@ -66,91 +65,33 @@ function initScrollReveals() {
 }
 
 /**
- * Hero Video 4-Scene Sequencer (0-4s, 4-8s, 8-12s, 12-16s loop)
+ * Hero Video Handler (Poster to Video Smooth Fade & Reduced Motion)
  */
-function initHeroVideoSequencer() {
-  const heroStage = document.querySelector('.hero-video-stage');
-  if (!heroStage) return;
+function initHeroVideo() {
+  const video = document.querySelector('.hero-video-bg');
+  if (!video) return;
 
-  const video = heroStage.querySelector('.hero-video-bg');
-  const scenes = heroStage.querySelectorAll('.hero-scene-item');
-  const indicators = heroStage.querySelectorAll('.hero-indicator-btn');
-
-  if (!scenes.length) return;
-
-  const SCENE_DURATION = 4; // 4 seconds per scene
-  const TOTAL_SCENES = scenes.length; // 4 scenes = 16 seconds total
-  let currentSceneIdx = 0;
-  let fallbackTimer = null;
-
-  function setActiveScene(idx, progressRatio = 0) {
-    currentSceneIdx = idx;
-
-    scenes.forEach((scene, i) => {
-      if (i === idx) {
-        scene.classList.add('active');
-      } else {
-        scene.classList.remove('active');
-      }
-    });
-
-    indicators.forEach((btn, i) => {
-      const fillBar = btn.querySelector('.hero-indicator-fill');
-      if (i === idx) {
-        btn.classList.add('active');
-        if (fillBar) fillBar.style.width = `${Math.min(100, Math.max(0, progressRatio * 100))}%`;
-      } else if (i < idx) {
-        btn.classList.remove('active');
-        if (fillBar) fillBar.style.width = '100%';
-      } else {
-        btn.classList.remove('active');
-        if (fillBar) fillBar.style.width = '0%';
-      }
-    });
+  function markLoaded() {
+    video.classList.add('is-loaded');
   }
 
-  // Video timeupdate handler
-  if (video) {
-    video.addEventListener('timeupdate', () => {
-      const curTime = video.currentTime % (SCENE_DURATION * TOTAL_SCENES);
-      const sceneIdx = Math.min(TOTAL_SCENES - 1, Math.floor(curTime / SCENE_DURATION));
-      const sceneProgress = (curTime % SCENE_DURATION) / SCENE_DURATION;
-
-      setActiveScene(sceneIdx, sceneProgress);
-    });
-
-    // Fallback if autoplay is restricted
-    video.play().catch(() => {
-      startFallbackTimer();
-    });
+  if (video.readyState >= 2) {
+    markLoaded();
   } else {
-    startFallbackTimer();
+    video.addEventListener('loadeddata', markLoaded, { once: true });
+    video.addEventListener('canplay', markLoaded, { once: true });
+    video.addEventListener('playing', markLoaded, { once: true });
   }
 
-  function startFallbackTimer() {
-    if (fallbackTimer) clearInterval(fallbackTimer);
-    let sec = 0;
-    fallbackTimer = setInterval(() => {
-      sec = (sec + 1) % (SCENE_DURATION * TOTAL_SCENES);
-      const idx = Math.floor(sec / SCENE_DURATION);
-      const prog = (sec % SCENE_DURATION) / SCENE_DURATION;
-      setActiveScene(idx, prog);
-    }, 1000);
-  }
-
-  // Click on indicators seeks video / switches scene
-  indicators.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const targetScene = parseInt(btn.dataset.sceneIndex || '0', 10);
-      if (video && !isNaN(video.duration)) {
-        video.currentTime = targetScene * SCENE_DURATION;
-      }
-      setActiveScene(targetScene, 0);
-    });
+  // Auto-play fallback
+  video.play().then(markLoaded).catch(() => {
+    // If browser restricts autoplay, the poster remains sharp and clean
   });
 
-  // Initial state
-  setActiveScene(0, 0);
+  // Respect reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    video.pause();
+  }
 }
 
 /**
@@ -166,18 +107,18 @@ function initScrollHeader() {
   function updateHeader() {
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Header solid/transparent toggle
-    if (scrollY > 50) {
+    // Header solid/transparent toggle (250-350ms transition)
+    if (scrollY > 40) {
       header.classList.add('header-scrolled');
     } else {
       header.classList.remove('header-scrolled');
     }
 
-    // Hero video subtle depth scale on scroll (performance-optimized transform)
+    // Hero video subtle depth scale on scroll (1.00 -> 0.98, slight fade)
     if (heroVideoBg && scrollY < window.innerHeight) {
       const factor = scrollY / window.innerHeight;
-      const scale = 1.02 - factor * 0.05; // 1.02 -> 0.97
-      const opacity = 1 - factor * 0.08;  // 1.0 -> 0.92
+      const scale = 1.0 - factor * 0.02; // 1.00 -> 0.98
+      const opacity = 1.0 - factor * 0.08; // 1.00 -> 0.92
       heroVideoBg.style.transform = `scale(${scale})`;
       heroVideoBg.style.opacity = `${opacity}`;
     }
