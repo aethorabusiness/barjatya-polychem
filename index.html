@@ -13,11 +13,13 @@
   <meta property="og:description" content="Precision in every compound. ISO 9001:2015 certified manufacturer of polymer masterbatches with 1,800 MT/year capacity in Jaipur, India.">
   <meta property="og:url" content="https://barjatyapolychem.com/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://barjatyapolychem.com/assets/images/hero_pellets.jpg">
+  <meta property="og:image" content="https://barjatyapolychem.com/assets/images/hero_poster.jpg">
 
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
 
@@ -31,7 +33,7 @@
         "@id": "https://barjatyapolychem.com/#organization",
         "name": "Barjatya Polychem",
         "url": "https://barjatyapolychem.com/",
-        "logo": "https://barjatyapolychem.com/assets/images/hero_pellets.jpg",
+        "logo": "https://barjatyapolychem.com/assets/images/logo.png",
         "contactPoint": {
           "@type": "ContactPoint",
           "telephone": "+91-9314657754",
@@ -76,7 +78,7 @@
 </head>
 <body>
 
-  <!-- Single Clean Site Header -->
+  <!-- Single Clean Transparent-to-Solid Header -->
   <header class="site-header">
     <div class="content-container header-inner">
       <a href="index.html" class="brand-logo" title="Barjatya Polychem - Home">
@@ -142,7 +144,7 @@
   <div class="mobile-nav-drawer">
     <div class="mobile-nav-header">
       <div class="brand-logo">
-        <img src="assets/images/logo.png" alt="Barjatya Polychem Logo" class="brand-logo-img" width="48" height="48">
+        <img src="assets/images/logo.png" alt="Barjatya Polychem Logo" class="brand-logo-img" width="40" height="40">
         <div class="logo-text"><span class="logo-name">BARJATYA POLYCHEM</span></div>
       </div>
       <button class="mobile-close-btn" aria-label="Close Menu">
@@ -176,119 +178,100 @@
     </div>
   </div>
 
-  <!-- Rebuilt Editorial Hero with Interactive Industrial Image Slider -->
-  <section class="hero-industrial">
-    <div class="hero-wrapper-wide">
-      <div class="hero-grid">
-        <!-- Hero Text Column -->
-        <div class="hero-content reveal-text">
-          <span class="section-eyebrow">Polymer Masterbatches &amp; Compounds</span>
-          <h1>Precision in <span>Every Compound.</span></h1>
-          <p class="hero-lead">
-            Barjatya Polychem manufactures Colour, Black, White, Additive Masterbatches and Filler Compounds for plastic processing applications.
+  <!-- SECTION 1: FULL-SCREEN VIDEO HERO (100svh) -->
+  <section class="hero-video-stage" aria-label="Hero Corporate Presentation">
+    <!-- Cinematic Video Background with Multi-Source & Poster Fallback -->
+    <video class="hero-video-bg" autoplay muted loop playsinline poster="assets/images/hero_poster.jpg">
+      <source src="assets/videos/hero_sequence.webm" type="video/webm">
+      <source src="assets/videos/hero_sequence.mp4" type="video/mp4">
+    </video>
+    
+    <!-- Gradient Overlay for Maximum Text Contrast -->
+    <div class="hero-video-overlay"></div>
+
+    <div class="content-container hero-video-content">
+      <!-- 4-Scene Synchronized Sequence Track -->
+      <div class="hero-scene-track">
+        <!-- Scene 01 (0–4s): Macro Masterbatch Pellets -->
+        <div class="hero-scene-item active" data-scene-index="0">
+          <span class="hero-scene-eyebrow">01 / Masterbatch Precision</span>
+          <h1 class="hero-scene-title">Precision in Every <br><span>Compound.</span></h1>
+          <p class="hero-scene-sub">
+            ISO 9001:2015 certified manufacturer of Colour, Black, White, Additive Masterbatches and Filler Compounds with 1,800 MT/year capacity in Jaipur, Rajasthan.
           </p>
-          <div class="hero-actions">
-            <a href="#products" class="btn btn-primary btn-lg">Explore Product Range</a>
-            <a href="contact.html" class="btn btn-outline-white btn-lg">Talk to Our Formulation Team</a>
-          </div>
-          <div class="hero-trust-strip">
-            <div class="hero-trust-item">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
-              <span>Jaipur Plant</span>
-            </div>
-            <div class="hero-trust-item">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-              <span>Dedicated Lines</span>
-            </div>
-            <div class="hero-trust-item">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-              <span>ISO 9001:2015</span>
-            </div>
-          </div>
         </div>
 
-        <!-- Hero Dynamic Image Slider -->
-        <div class="hero-slider-stage reveal-image" tabindex="0" aria-label="Industrial imagery showcase" role="region">
-          <!-- Slide 01: Colour Masterbatch -->
-          <div class="hero-slide active" data-slide-index="0">
-            <div class="hero-slide-meta">01 / Colour Masterbatch</div>
-            <img src="assets/images/colour_masterbatch.jpg" alt="Colour Masterbatch Granules manufactured by Barjatya Polychem Jaipur" width="900" height="600" loading="eager">
-            <div class="hero-slide-caption">
-              <h3>Colour Masterbatches</h3>
-              <p>Standard shades, outdoor weatherable colours &amp; bespoke matching.</p>
-            </div>
-          </div>
+        <!-- Scene 02 (4–8s): Manufacturing / Extrusion -->
+        <div class="hero-scene-item" data-scene-index="1">
+          <span class="hero-scene-eyebrow">02 / Twin Screw Compounding</span>
+          <h2 class="hero-scene-title">Engineered for <br><span>Consistency.</span></h2>
+          <p class="hero-scene-sub">
+            Operating high-shear Twin Screw Extruders, Single Screw lines, Kneaders, and separate dedicated machinery for zero cross-batch contamination.
+          </p>
+        </div>
 
-          <!-- Slide 02: Black Masterbatch -->
-          <div class="hero-slide" data-slide-index="1">
-            <div class="hero-slide-meta">02 / Black Masterbatch</div>
-            <img src="assets/images/black_masterbatch.jpg" alt="Carbon Black Concentrates for Pipes and Films" width="900" height="600" loading="lazy">
-            <div class="hero-slide-caption">
-              <h3>Black Masterbatches</h3>
-              <p>Furnace carbon black concentrates for films, moulding &amp; pressure pipes.</p>
-            </div>
-          </div>
+        <!-- Scene 03 (8–12s): Colour, Black, White, Additive & Filler Spectrum -->
+        <div class="hero-scene-item" data-scene-index="2">
+          <span class="hero-scene-eyebrow">03 / Polymer Formulations</span>
+          <h2 class="hero-scene-title">Colour. Performance. <br><span>Control.</span></h2>
+          <p class="hero-scene-sub">
+            Custom spectrophotometer shade matching, high-jetness blacks, barrier rutile whites, and 10 specialized functional additives for demanding processors.
+          </p>
+        </div>
 
-          <!-- Slide 03: White Masterbatch -->
-          <div class="hero-slide" data-slide-index="2">
-            <div class="hero-slide-meta">03 / White Masterbatch</div>
-            <img src="assets/images/white_masterbatch.jpg" alt="Rutile Titanium Dioxide White Masterbatch" width="900" height="600" loading="lazy">
-            <div class="hero-slide-caption">
-              <h3>White Masterbatches</h3>
-              <p>High-opacity Rutile TiO2 concentrates for lamination and barrier packaging.</p>
-            </div>
-          </div>
+        <!-- Scene 04 (12–16s): Manufacturing / Finished Material / Global Environment -->
+        <div class="hero-scene-item" data-scene-index="3">
+          <span class="hero-scene-eyebrow">04 / Global Supply &amp; Exports</span>
+          <h2 class="hero-scene-title">Built for <br><span>Industry.</span></h2>
+          <p class="hero-scene-sub">
+            Reliable compounding partner supplying plastics converters across India and active regional export corridors in Nepal and Bangladesh.
+          </p>
+        </div>
+      </div>
 
-          <!-- Slide 04: Additive Masterbatch -->
-          <div class="hero-slide" data-slide-index="3">
-            <div class="hero-slide-meta">04 / Additive Masterbatch</div>
-            <img src="assets/images/additive_masterbatch.jpg" alt="Functional Polymer Additive Masterbatches" width="900" height="600" loading="lazy">
-            <div class="hero-slide-caption">
-              <h3>Additive Masterbatches</h3>
-              <p>UV stabilizers, optical brighteners, slip, clarifiers &amp; processing aids.</p>
-            </div>
-          </div>
+      <!-- Bottom Actions & Progress Sequencer -->
+      <div class="hero-video-bottom">
+        <div class="hero-video-actions">
+          <a href="#products" class="btn btn-primary btn-lg">Explore Products</a>
+          <a href="contact.html" class="btn btn-outline-white btn-lg">Talk to Our Formulation Team</a>
+        </div>
 
-          <!-- Slide 05: Manufacturing -->
-          <div class="hero-slide" data-slide-index="4">
-            <div class="hero-slide-meta">05 / Manufacturing</div>
-            <img src="assets/images/plant_extrusion.jpg" alt="Barjatya Polychem Manufacturing Extrusion Plant in Jaipur" width="900" height="600" loading="lazy">
-            <div class="hero-slide-caption">
-              <h3>Twin Screw &amp; Kneader Compounding</h3>
-              <p>Dedicated separate machinery lines for White, Colour, Black, and Filler MB.</p>
-            </div>
-          </div>
-
-          <!-- Slider Controls -->
-          <div class="hero-slider-controls">
-            <div class="hero-counter">
-              <span id="heroSlideCurrent">01</span> / <span class="hero-counter-total" id="heroSlideTotal">05</span>
-            </div>
-            <button class="hero-nav-btn" id="heroSliderPrev" aria-label="Previous Slide">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-            </button>
-            <button class="hero-nav-btn" id="heroSliderNext" aria-label="Next Slide">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-            </button>
-          </div>
+        <!-- 4-Scene Progress Indicators -->
+        <div class="hero-scene-indicators" role="tablist" aria-label="Hero Scene Sequencer">
+          <button class="hero-indicator-btn active" data-scene-index="0" role="tab" aria-label="Scene 1: Masterbatch Precision">
+            <span class="hero-indicator-label">01 / Pellets</span>
+            <div class="hero-indicator-bar"><div class="hero-indicator-fill"></div></div>
+          </button>
+          <button class="hero-indicator-btn" data-scene-index="1" role="tab" aria-label="Scene 2: Compounding & Extrusion">
+            <span class="hero-indicator-label">02 / Plant</span>
+            <div class="hero-indicator-bar"><div class="hero-indicator-fill"></div></div>
+          </button>
+          <button class="hero-indicator-btn" data-scene-index="2" role="tab" aria-label="Scene 3: Colour & Additives">
+            <span class="hero-indicator-label">03 / Spectrum</span>
+            <div class="hero-indicator-bar"><div class="hero-indicator-fill"></div></div>
+          </button>
+          <button class="hero-indicator-btn" data-scene-index="3" role="tab" aria-label="Scene 4: Global Industry">
+            <span class="hero-indicator-label">04 / Global</span>
+            <div class="hero-indicator-bar"><div class="hero-indicator-fill"></div></div>
+          </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Tactile Material Strip (The Material Behind The Process) -->
+  <!-- SECTION 2: MATERIAL / PELLET EXPERIENCE (THE MATERIAL BEHIND THE PROCESS) -->
   <aside class="material-strip">
     <div class="content-container">
       <div class="material-strip-header">
         <span class="material-strip-title">The Material Behind The Process</span>
-        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--color-gray-500);">100% Polymer Granule Formulations</span>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--color-gray-400);">100% Virgin Polymer Formulations</span>
       </div>
       <div class="material-strip-track">
         <div class="material-tag-item"><span class="material-tag-dot"></span> Colour Masterbatch</div>
         <div class="material-tag-item"><span class="material-tag-dot"></span> Carbon Black MB</div>
         <div class="material-tag-item"><span class="material-tag-dot"></span> Rutile TiO2 White MB</div>
         <div class="material-tag-item"><span class="material-tag-dot"></span> UV Stabilizers (HALS)</div>
-        <div class="material-tag-item"><span class="material-tag-dot"></span> Optical Brighteners</div>
+        <div class="material-tag-item"><span class="material-tag-dot"></span> Optical Brighteners (OB)</div>
         <div class="material-tag-item"><span class="material-tag-dot"></span> Polymer Processing Aid (PPA)</div>
         <div class="material-tag-item"><span class="material-tag-dot"></span> Calcium Carbonate Filler Compounds</div>
         <div class="material-tag-item"><span class="material-tag-dot"></span> PP Clarifying Agents</div>
@@ -296,7 +279,7 @@
     </div>
   </aside>
 
-  <!-- Credibility & Statistics Strip (Directly Below Hero) -->
+  <!-- Credibility & Statistics Strip -->
   <section class="section-sm section-muted">
     <div class="content-container">
       <div class="stats-grid">
@@ -307,17 +290,17 @@
         </div>
         <div class="stat-card reveal-text" style="--reveal-delay: 80ms;">
           <div class="stat-number">1,800</div>
-          <div class="stat-label">Tons / Year Production Capacity</div>
+          <div class="stat-label">Tons / Year Capacity</div>
           <div class="stat-sub">Twin screw, single screw, and kneader compounding infrastructure</div>
         </div>
         <div class="stat-card reveal-text" style="--reveal-delay: 160ms;">
           <div class="stat-number">ISO 9001:2015</div>
-          <div class="stat-label">Certified Quality Management</div>
-          <div class="stat-sub">Quality testing protocols for material consistency and customer specifications</div>
+          <div class="stat-label">Certified Quality System</div>
+          <div class="stat-sub">Quality testing protocols for material consistency and client specifications</div>
         </div>
         <div class="stat-card reveal-text" style="--reveal-delay: 240ms;">
           <div class="stat-number">Nepal &amp; Bangladesh</div>
-          <div class="stat-label">Current Export Markets</div>
+          <div class="stat-label">Active Export Markets</div>
           <div class="stat-sub">Supplying reliable masterbatch solutions with global expansion vision</div>
         </div>
       </div>
@@ -358,7 +341,7 @@
     </div>
   </section>
 
-  <!-- Synchronized Product Portfolio Showcase (Interactive Section) -->
+  <!-- SECTION 3: INTERACTIVE PRODUCTS PRESENTATION (LEFT TABS, RIGHT SLIDING VISUAL) -->
   <section class="section section-muted" id="products">
     <div class="content-container">
       <div class="section-header">
@@ -370,16 +353,7 @@
       </div>
 
       <div class="product-showcase-wrapper">
-        <!-- Interactive Visual Display -->
-        <div class="product-showcase-visual reveal-image">
-          <img src="assets/images/colour_masterbatch.jpg" alt="Colour Masterbatch" class="product-showcase-img active" data-product-id="colour" width="700" height="500" loading="lazy">
-          <img src="assets/images/black_masterbatch.jpg" alt="Black Masterbatch" class="product-showcase-img" data-product-id="black" width="700" height="500" loading="lazy">
-          <img src="assets/images/white_masterbatch.jpg" alt="White Masterbatch" class="product-showcase-img" data-product-id="white" width="700" height="500" loading="lazy">
-          <img src="assets/images/additive_masterbatch.jpg" alt="Additive Masterbatch" class="product-showcase-img" data-product-id="additive" width="700" height="500" loading="lazy">
-          <img src="assets/images/filler_compounds.jpg" alt="Filler Compounds" class="product-showcase-img" data-product-id="filler" width="700" height="500" loading="lazy">
-        </div>
-
-        <!-- Product Tab List -->
+        <!-- Left Product Navigation Tabs -->
         <div class="product-showcase-list reveal-text">
           <!-- 01 Colour Masterbatch -->
           <div class="product-tab-item active" data-product-target="colour">
@@ -456,11 +430,50 @@
             </div>
           </div>
         </div>
+
+        <!-- Right Sliding Visual Stage -->
+        <div class="product-showcase-visual reveal-image">
+          <div class="product-showcase-slide active" data-product-id="colour">
+            <img src="assets/images/colour_masterbatch.jpg" alt="Colour Masterbatch Granules in Jaipur" width="750" height="520" loading="lazy">
+            <div class="product-showcase-caption">
+              <h4>01 / Colour Masterbatches</h4>
+              <p>Standard shades, weather-resistant pigments &amp; custom spectrophotometer matching.</p>
+            </div>
+          </div>
+          <div class="product-showcase-slide" data-product-id="black">
+            <img src="assets/images/black_masterbatch.jpg" alt="Black Masterbatch Concentrates in Jaipur" width="750" height="520" loading="lazy">
+            <div class="product-showcase-caption">
+              <h4>02 / Black Masterbatches</h4>
+              <p>High-jetness furnace carbon black concentrates for pipes, films &amp; moulding.</p>
+            </div>
+          </div>
+          <div class="product-showcase-slide" data-product-id="white">
+            <img src="assets/images/white_masterbatch.jpg" alt="White Masterbatch Rutile TiO2 in Jaipur" width="750" height="520" loading="lazy">
+            <div class="product-showcase-caption">
+              <h4>03 / White Masterbatches</h4>
+              <p>High-opacity Rutile Titanium Dioxide concentrates on dedicated production lines.</p>
+            </div>
+          </div>
+          <div class="product-showcase-slide" data-product-id="additive">
+            <img src="assets/images/additive_masterbatch.jpg" alt="Additive Masterbatch Concentrates in Jaipur" width="750" height="520" loading="lazy">
+            <div class="product-showcase-caption">
+              <h4>04 / Additive Masterbatches</h4>
+              <p>10 functional polymer modifiers: UV stabilizers, slip, antiblock, PPA, and clarifiers.</p>
+            </div>
+          </div>
+          <div class="product-showcase-slide" data-product-id="filler">
+            <img src="assets/images/filler_compounds.jpg" alt="Filler Compounds Calcium Carbonate in Jaipur" width="750" height="520" loading="lazy">
+            <div class="product-showcase-caption">
+              <h4>05 / Filler Compounds</h4>
+              <p>Ultrafine CaCO3 mineral concentrates for raffia anti-fibrillation and cost reduction.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Sticky Manufacturing Storytelling Section -->
+  <!-- SECTION 4: STICKY MANUFACTURING STORYTELLING -->
   <section class="section section-dark">
     <div class="content-container">
       <div class="section-header">
@@ -547,10 +560,10 @@
     </div>
   </section>
 
-  <!-- Horizontal Application Rail (Drag & Touch Enabled) -->
+  <!-- SECTION 5: APPLICATIONS VISUAL HORIZONTAL SLIDER -->
   <section class="section section-muted">
     <div class="content-container">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom: 24px;">
         <div class="section-header" style="margin-bottom:0;">
           <span class="section-eyebrow">Industry Sectors</span>
           <h2 class="section-title">Applications Across Plastic Processing</h2>
@@ -641,60 +654,141 @@
     </div>
   </section>
 
-  <!-- AI Search / Local GEO Answer-First FAQs Section -->
+  <!-- SECTION 6: QUALITY & LABORATORY (ISO 9001:2015) -->
   <section class="section">
     <div class="content-container">
-      <div class="section-header">
-        <span class="section-eyebrow">Essential Information</span>
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-desc">Key factual answers regarding Barjatya Polychem's manufacturing, products, and regional operations.</p>
-      </div>
-
-      <div class="faq-grid">
-        <div class="faq-card reveal-text">
-          <h3>Who is Barjatya Polychem?</h3>
-          <p>Barjatya Polychem (BP) is an ISO 9001:2015 certified manufacturer of Colour, Black, White, Additive Masterbatches and Filler Compounds established in 2024 in Jaipur, Rajasthan, India.</p>
+      <div style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(36px, 5vw, 64px); align-items:center;">
+        <div class="reveal-text">
+          <span class="section-eyebrow">Quality Assurance System</span>
+          <h2 class="section-title">ISO 9001:2015 Certified Laboratory &amp; Testing</h2>
+          <p class="lead">
+            Quality control at Barjatya Polychem is anchored by our ISO 9001:2015 certified quality management system and in-house testing facility.
+          </p>
+          <p>
+            Equipped with digital spectrophotometers for accurate color matching, Melt Flow Index (MFI) testers for rheological verification, and pilot extrusion lines for dispersion checks, we ensure batch-to-batch repeatability for high-speed conversion lines.
+          </p>
+          <div style="margin-top: 24px; display:flex; gap:14px; flex-wrap:wrap;">
+            <a href="laboratory.html" class="btn btn-dark">Explore Quality &amp; Lab</a>
+            <a href="contact.html" class="btn btn-outline">Request Test Certificate (COA)</a>
+          </div>
         </div>
-
-        <div class="faq-card reveal-text" style="--reveal-delay: 80ms;">
-          <h3>Where is the manufacturing plant located?</h3>
-          <p>Our compounding plant is located near the Police Station, Industrial Area, Jhotwara, Jaipur-302012, Rajasthan, India.</p>
-        </div>
-
-        <div class="faq-card reveal-text" style="--reveal-delay: 160ms;">
-          <h3>What is Barjatya Polychem's production capacity?</h3>
-          <p>The facility operates at an installed compounding capacity of 1,800 Metric Tons per year across Twin Screw, Single Screw, and Kneader production lines.</p>
-        </div>
-
-        <div class="faq-card reveal-text" style="--reveal-delay: 240ms;">
-          <h3>Where does Barjatya Polychem export?</h3>
-          <p>Barjatya Polychem actively exports masterbatch products to Nepal and Bangladesh, with plans for wider international market expansion.</p>
-        </div>
-
-        <div class="faq-card reveal-text" style="--reveal-delay: 320ms;">
-          <h3>How does BP prevent batch contamination?</h3>
-          <p>We maintain separate dedicated production machinery for White, Colour, Black, and Filler masterbatches to eliminate cross-contamination during product transitions.</p>
-        </div>
-
-        <div class="faq-card reveal-text" style="--reveal-delay: 400ms;">
-          <h3>Can custom colour masterbatches be matched?</h3>
-          <p>Yes. Our developed laboratory utilizes digital spectrophotometers and sample extrusion lines to formulate bespoke colour matches according to client polymer and shade requirements.</p>
+        <div class="reveal-image">
+          <div style="border:1px solid var(--color-border); border-radius:var(--radius-xs); overflow:hidden; box-shadow:var(--shadow-md);">
+            <img src="assets/images/quality_laboratory.jpg" alt="Barjatya Polychem Quality Control Laboratory in Jaipur" width="700" height="466" loading="lazy">
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Final Call to Action Section -->
+  <!-- SECTION 7: GLOBAL REACH & EXPORT CORRIDORS -->
+  <section class="section section-muted">
+    <div class="content-container">
+      <div class="section-header">
+        <span class="section-eyebrow">International Corridors</span>
+        <h2 class="section-title">Export Operations: Nepal &amp; Bangladesh</h2>
+        <p class="section-desc">Supplying quality masterbatches and compounds to regional South Asian plastic conversion hubs.</p>
+      </div>
+
+      <div class="export-corridor-grid">
+        <div class="corridor-card reveal-text">
+          <div class="corridor-country">
+            <h3>Nepal</h3>
+            <span class="corridor-badge">Active Export Market</span>
+          </div>
+          <p style="font-size:0.9375rem; color:var(--color-gray-600); line-height:1.6; margin-bottom:14px;">
+            Supplying Calcium Carbonate ($CaCO_3$) filler masterbatches, White Rutile TiO2 concentrates, and colour compounds for PP woven sack, film extrusion, and moulding manufacturers.
+          </p>
+          <div class="tech-tag brand">Cross-Border Land Freight Hubs</div>
+        </div>
+
+        <div class="corridor-card reveal-text" style="--reveal-delay: 100ms;">
+          <div class="corridor-country">
+            <h3>Bangladesh</h3>
+            <span class="corridor-badge">Active Export Market</span>
+          </div>
+          <p style="font-size:0.9375rem; color:var(--color-gray-600); line-height:1.6; margin-bottom:14px;">
+            Exporting specialty additive masterbatches, carbon black concentrates, and custom-matched colour masterbatches to the growing garment packaging, agricultural film, and household moulding industries.
+          </p>
+          <div class="tech-tag brand">Containerized Multi-Modal Shipments</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; text-align:center;">
+        <a href="global-reach.html" class="btn btn-outline-brand">Learn About Export Capabilities &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: TECHNICAL INSIGHTS (POLYMER & MASTERBATCH INSIGHTS) -->
+  <section class="section">
+    <div class="content-container">
+      <div class="section-header">
+        <span class="section-eyebrow">Educational Knowledge Hub</span>
+        <h2 class="section-title">Polymer &amp; Masterbatch Insights</h2>
+        <p class="section-desc">Technical engineering guides on formulation principles, pigment dispersion, and processing solutions.</p>
+      </div>
+
+      <div class="blog-grid">
+        <article class="blog-card reveal-text">
+          <div class="blog-card-thumb">
+            <span class="blog-card-badge">Colour Science</span>
+            <img src="assets/images/colour_masterbatch.jpg" alt="Colour Masterbatch Formulation" loading="lazy">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta"><span>By BP Technical Team</span> &bull; <span>Technical Guide</span></div>
+            <h3 class="blog-card-title"><a href="blog/what-is-colour-masterbatch.html">What Is a Colour Masterbatch? Chemistry, Carriers &amp; Dispersion</a></h3>
+            <p class="blog-card-excerpt">An engineering overview of how organic and inorganic pigments are encapsulated in carrier polymers for consistent coloration in plastic extrusion and moulding.</p>
+            <a href="blog/what-is-colour-masterbatch.html" class="btn btn-outline-brand btn-sm">Read Article &rarr;</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal-text" style="--reveal-delay: 100ms;">
+          <div class="blog-card-thumb">
+            <span class="blog-card-badge">Carbon Black</span>
+            <img src="assets/images/black_masterbatch.jpg" alt="Carbon Black Dispersion in Polymers" loading="lazy">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta"><span>By BP Technical Team</span> &bull; <span>Processing Guide</span></div>
+            <h3 class="blog-card-title"><a href="blog/black-masterbatch-carbon-black-dispersion.html">Black Masterbatch: Furnace Carbon Black &amp; Rheological Dispersion</a></h3>
+            <p class="blog-card-excerpt">Understanding primary particle size, aggregate structure, UV weatherability, and conductive properties in HDPE pipes, films, and engineering mouldings.</p>
+            <a href="blog/black-masterbatch-carbon-black-dispersion.html" class="btn btn-outline-brand btn-sm">Read Article &rarr;</a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal-text" style="--reveal-delay: 200ms;">
+          <div class="blog-card-thumb">
+            <span class="blog-card-badge">White TiO2</span>
+            <img src="assets/images/white_masterbatch.jpg" alt="Titanium Dioxide White Masterbatch" loading="lazy">
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta"><span>By BP Technical Team</span> &bull; <span>Material Science</span></div>
+            <h3 class="blog-card-title"><a href="blog/white-masterbatch-titanium-dioxide.html">White Masterbatch: Rutile Titanium Dioxide ($TiO_2$) for Barrier Opacity</a></h3>
+            <p class="blog-card-excerpt">How high-refractive-index Rutile TiO2 delivers UV protection, gloss retention, and barrier performance across milk pouches, lamination, and injection parts.</p>
+            <a href="blog/white-masterbatch-titanium-dioxide.html" class="btn btn-outline-brand btn-sm">Read Article &rarr;</a>
+          </div>
+        </article>
+      </div>
+
+      <div style="margin-top: 24px; text-align:center;">
+        <a href="blog.html" class="btn btn-dark">View All Technical Insights &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: FINAL CALL TO ACTION (READY TO DISCUSS YOUR FORMULATION?) -->
   <section class="section section-dark">
     <div class="content-container text-center" style="max-width: 860px; margin: 0 auto; text-align:center;">
       <span class="section-eyebrow">Technical Formulation &amp; Supply</span>
-      <h2 style="color:var(--color-white); margin-bottom:18px;">Let's build the right material solution for your application.</h2>
-      <p style="font-size:1.15rem; color:var(--color-gray-300); margin-bottom:34px;">
-        Talk to the Barjatya Polychem team about your product or application requirements.
+      <h2 style="color:var(--color-white); margin-bottom:18px; font-size:clamp(2rem, 3.8vw, 3rem); line-height:1.15; text-transform:uppercase;">
+        Ready to discuss your formulation?
+      </h2>
+      <p style="font-size:1.15rem; color:var(--color-gray-300); margin-bottom:34px; line-height:1.6;">
+        Talk to the Barjatya Polychem team in Jaipur about sample trials, custom shade matching, or polymer additive requirements.
       </p>
       <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
-        <a href="contact.html" class="btn btn-primary btn-lg">Send an Enquiry</a>
-        <a href="tel:+919314657754" class="btn btn-outline-white btn-lg">Call +91 9314657754</a>
+        <a href="contact.html" class="btn btn-primary btn-lg">Talk to Our Team</a>
+        <a href="colour-masterbatch.html" class="btn btn-outline-white btn-lg">Explore Products</a>
       </div>
     </div>
   </section>

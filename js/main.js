@@ -1,32 +1,36 @@
 /**
  * BARJATYA POLYCHEM (BP) - CORE APPLICATION & MOTION CONTROLLER
- * High-performance, uninhibited native scrolling, IntersectionObserver reveals,
- * Editorial Hero Slider, Synchronized Product Showcase, Sticky Manufacturing Story,
- * and Application Rail.
+ * Homepage V2 Video-First Industrial Experience Engine
+ * Fast native scrolling, synchronized 4-scene hero video sequencer,
+ * transparent-to-solid header, interactive product presentation,
+ * sticky manufacturing storytelling, and horizontal application rail.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
-  // 1. Initialize Aeronex-Style Viewport Reveals
+  // 1. Initialize Viewport Reveals
   initScrollReveals();
 
-  // 2. Initialize Editorial Hero Image Slider
-  initHeroSlider();
+  // 2. Initialize Full-Screen Hero Video 4-Scene Sequencer
+  initHeroVideoSequencer();
 
-  // 3. Initialize Synchronized Product Showcase (Homepage)
+  // 3. Initialize Transparent-to-Solid Header & Hero Scroll Depth
+  initScrollHeader();
+
+  // 4. Initialize Interactive Product Presentation (Left Nav, Right Sliding Visual)
   initProductShowcase();
 
-  // 4. Initialize Sticky Manufacturing Process Observer
+  // 5. Initialize Sticky Manufacturing Lifecycle Observer
   initManufacturingObserver();
 
-  // 5. Initialize Horizontal Application Rail (Drag & Touch)
+  // 6. Initialize Horizontal Application Rail (Drag & Touch)
   initAppRail();
 
-  // 6. Initialize Mobile Drawer & Navigation
+  // 7. Initialize Mobile Navigation Drawer
   initMobileNav();
 
-  // 7. Initialize RFQ Modal & B2B Inquiry Handlers
+  // 8. Initialize B2B RFQ Modal & Form Handlers
   initRfqModal();
   initInquiryForms();
 });
@@ -38,7 +42,6 @@ function initScrollReveals() {
   const reveals = document.querySelectorAll('.reveal-image, .reveal-text');
   if (!reveals.length) return;
 
-  // Respect reduced motion
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     reveals.forEach(el => el.classList.add('is-revealed'));
     return;
@@ -63,111 +66,147 @@ function initScrollReveals() {
 }
 
 /**
- * Editorial Hero Slider Engine (Stable text, rotating industrial visual)
+ * Hero Video 4-Scene Sequencer (0-4s, 4-8s, 8-12s, 12-16s loop)
  */
-function initHeroSlider() {
-  const stage = document.querySelector('.hero-slider-stage');
-  if (!stage) return;
+function initHeroVideoSequencer() {
+  const heroStage = document.querySelector('.hero-video-stage');
+  if (!heroStage) return;
 
-  const slides = stage.querySelectorAll('.hero-slide');
-  const currentCount = document.getElementById('heroSlideCurrent');
-  const totalCount = document.getElementById('heroSlideTotal');
-  const prevBtn = document.getElementById('heroSliderPrev');
-  const nextBtn = document.getElementById('heroSliderNext');
+  const video = heroStage.querySelector('.hero-video-bg');
+  const scenes = heroStage.querySelectorAll('.hero-scene-item');
+  const indicators = heroStage.querySelectorAll('.hero-indicator-btn');
 
-  if (!slides.length) return;
+  if (!scenes.length) return;
 
-  let currentIndex = 0;
-  let autoplayTimer = null;
-  const slideCount = slides.length;
-  const AUTOPLAY_INTERVAL = 6000;
+  const SCENE_DURATION = 4; // 4 seconds per scene
+  const TOTAL_SCENES = scenes.length; // 4 scenes = 16 seconds total
+  let currentSceneIdx = 0;
+  let fallbackTimer = null;
 
-  if (totalCount) {
-    totalCount.textContent = String(slideCount).padStart(2, '0');
+  function setActiveScene(idx, progressRatio = 0) {
+    currentSceneIdx = idx;
+
+    scenes.forEach((scene, i) => {
+      if (i === idx) {
+        scene.classList.add('active');
+      } else {
+        scene.classList.remove('active');
+      }
+    });
+
+    indicators.forEach((btn, i) => {
+      const fillBar = btn.querySelector('.hero-indicator-fill');
+      if (i === idx) {
+        btn.classList.add('active');
+        if (fillBar) fillBar.style.width = `${Math.min(100, Math.max(0, progressRatio * 100))}%`;
+      } else if (i < idx) {
+        btn.classList.remove('active');
+        if (fillBar) fillBar.style.width = '100%';
+      } else {
+        btn.classList.remove('active');
+        if (fillBar) fillBar.style.width = '0%';
+      }
+    });
   }
 
-  function goToSlide(index) {
-    slides[currentIndex].classList.remove('active');
-    currentIndex = (index + slideCount) % slideCount;
-    slides[currentIndex].classList.add('active');
+  // Video timeupdate handler
+  if (video) {
+    video.addEventListener('timeupdate', () => {
+      const curTime = video.currentTime % (SCENE_DURATION * TOTAL_SCENES);
+      const sceneIdx = Math.min(TOTAL_SCENES - 1, Math.floor(curTime / SCENE_DURATION));
+      const sceneProgress = (curTime % SCENE_DURATION) / SCENE_DURATION;
 
-    if (currentCount) {
-      currentCount.textContent = String(currentIndex + 1).padStart(2, '0');
-    }
+      setActiveScene(sceneIdx, sceneProgress);
+    });
+
+    // Fallback if autoplay is restricted
+    video.play().catch(() => {
+      startFallbackTimer();
+    });
+  } else {
+    startFallbackTimer();
   }
 
-  function nextSlide() {
-    goToSlide(currentIndex + 1);
+  function startFallbackTimer() {
+    if (fallbackTimer) clearInterval(fallbackTimer);
+    let sec = 0;
+    fallbackTimer = setInterval(() => {
+      sec = (sec + 1) % (SCENE_DURATION * TOTAL_SCENES);
+      const idx = Math.floor(sec / SCENE_DURATION);
+      const prog = (sec % SCENE_DURATION) / SCENE_DURATION;
+      setActiveScene(idx, prog);
+    }, 1000);
   }
 
-  function prevSlide() {
-    goToSlide(currentIndex - 1);
-  }
-
-  function startAutoplay() {
-    stopAutoplay();
-    autoplayTimer = setInterval(nextSlide, AUTOPLAY_INTERVAL);
-  }
-
-  function stopAutoplay() {
-    if (autoplayTimer) {
-      clearInterval(autoplayTimer);
-      autoplayTimer = null;
-    }
-  }
-
-  // Event Listeners
-  if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); startAutoplay(); });
-  if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); startAutoplay(); });
-
-  stage.addEventListener('mouseenter', stopAutoplay);
-  stage.addEventListener('mouseleave', startAutoplay);
-  stage.addEventListener('focusin', stopAutoplay);
-  stage.addEventListener('focusout', startAutoplay);
-
-  // Keyboard navigation
-  stage.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { nextSlide(); startAutoplay(); }
-    if (e.key === 'ArrowLeft') { prevSlide(); startAutoplay(); }
+  // Click on indicators seeks video / switches scene
+  indicators.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetScene = parseInt(btn.dataset.sceneIndex || '0', 10);
+      if (video && !isNaN(video.duration)) {
+        video.currentTime = targetScene * SCENE_DURATION;
+      }
+      setActiveScene(targetScene, 0);
+    });
   });
 
-  // Mobile Touch Swipe
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  stage.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    stopAutoplay();
-  }, { passive: true });
-
-  stage.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) nextSlide();
-      else prevSlide();
-    }
-    startAutoplay();
-  }, { passive: true });
-
-  startAutoplay();
+  // Initial state
+  setActiveScene(0, 0);
 }
 
 /**
- * Synchronized Product Showcase (Homepage Tab-to-Image Controller)
+ * Transparent-to-Solid Header and Hero Scroll Depth Transition
+ */
+function initScrollHeader() {
+  const header = document.querySelector('.site-header');
+  const heroVideoBg = document.querySelector('.hero-video-bg');
+  if (!header) return;
+
+  let ticking = false;
+
+  function updateHeader() {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Header solid/transparent toggle
+    if (scrollY > 50) {
+      header.classList.add('header-scrolled');
+    } else {
+      header.classList.remove('header-scrolled');
+    }
+
+    // Hero video subtle depth scale on scroll (performance-optimized transform)
+    if (heroVideoBg && scrollY < window.innerHeight) {
+      const factor = scrollY / window.innerHeight;
+      const scale = 1.02 - factor * 0.05; // 1.02 -> 0.97
+      const opacity = 1 - factor * 0.08;  // 1.0 -> 0.92
+      heroVideoBg.style.transform = `scale(${scale})`;
+      heroVideoBg.style.opacity = `${opacity}`;
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Initial run
+  updateHeader();
+}
+
+/**
+ * Interactive Product Presentation (Left Navigation Tabs, Right Sliding Visual)
  */
 function initProductShowcase() {
   const wrapper = document.querySelector('.product-showcase-wrapper');
   if (!wrapper) return;
 
   const tabs = wrapper.querySelectorAll('.product-tab-item');
-  const images = wrapper.querySelectorAll('.product-showcase-img');
+  const slides = wrapper.querySelectorAll('.product-showcase-slide');
 
-  tabs.forEach(tab => {
-    tab.addEventListener('mouseenter', () => activateTab(tab));
-    tab.addEventListener('click', () => activateTab(tab));
-    tab.addEventListener('focus', () => activateTab(tab));
-  });
+  if (!tabs.length || !slides.length) return;
 
   function activateTab(activeTab) {
     const target = activeTab.dataset.productTarget;
@@ -176,13 +215,47 @@ function initProductShowcase() {
     tabs.forEach(t => t.classList.remove('active'));
     activeTab.classList.add('active');
 
-    images.forEach(img => {
-      if (img.dataset.productId === target) {
-        img.classList.add('active');
+    slides.forEach(slide => {
+      if (slide.dataset.productId === target) {
+        slide.classList.add('active');
       } else {
-        img.classList.remove('active');
+        slide.classList.remove('active');
       }
     });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('mouseenter', () => activateTab(tab));
+    tab.addEventListener('click', () => activateTab(tab));
+    tab.addEventListener('focus', () => activateTab(tab));
+  });
+
+  // Mobile Touch Swipe support for product showcase
+  const visual = wrapper.querySelector('.product-showcase-visual');
+  if (visual) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    visual.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    visual.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 40) {
+        let currentIdx = 0;
+        tabs.forEach((t, i) => {
+          if (t.classList.contains('active')) currentIdx = i;
+        });
+
+        if (diff > 0 && currentIdx < tabs.length - 1) {
+          activateTab(tabs[currentIdx + 1]);
+        } else if (diff < 0 && currentIdx > 0) {
+          activateTab(tabs[currentIdx - 1]);
+        }
+      }
+    }, { passive: true });
   }
 }
 
@@ -215,7 +288,7 @@ function initManufacturingObserver() {
         }
       }
     });
-  }, { threshold: 0.6 });
+  }, { threshold: 0.5 });
 
   steps.forEach(step => observer.observe(step));
 }
@@ -249,19 +322,19 @@ function initAppRail() {
 
   track.addEventListener('mousedown', (e) => {
     isDown = true;
-    track.style.cursor = 'grabbing';
+    track.classList.add('is-dragging');
     startX = e.pageX - track.offsetLeft;
     scrollLeft = track.scrollLeft;
   });
 
   track.addEventListener('mouseleave', () => {
     isDown = false;
-    track.style.cursor = 'grab';
+    track.classList.remove('is-dragging');
   });
 
   track.addEventListener('mouseup', () => {
     isDown = false;
-    track.style.cursor = 'grab';
+    track.classList.remove('is-dragging');
   });
 
   track.addEventListener('mousemove', (e) => {
@@ -274,7 +347,7 @@ function initAppRail() {
 }
 
 /**
- * Mobile Navigation Drawer
+ * Mobile Navigation Drawer Toggle & Accordion Submenus
  */
 function initMobileNav() {
   const toggleBtn = document.querySelector('.mobile-toggle-btn');
@@ -285,14 +358,14 @@ function initMobileNav() {
   if (!toggleBtn || !drawer || !overlay) return;
 
   function openDrawer() {
-    drawer.classList.add('open');
-    overlay.classList.add('open');
+    drawer.classList.add('active');
+    overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
 
   function closeDrawer() {
-    drawer.classList.remove('open');
-    overlay.classList.remove('open');
+    drawer.classList.remove('active');
+    overlay.classList.remove('active');
     document.body.style.overflow = '';
   }
 
@@ -300,50 +373,59 @@ function initMobileNav() {
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
   overlay.addEventListener('click', closeDrawer);
 
-  // Accordion inside mobile drawer
+  // Accordion toggle in mobile menu
   const accordions = drawer.querySelectorAll('.mobile-accordion-btn');
   accordions.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const subMenu = btn.nextElementSibling;
-      if (subMenu) {
-        subMenu.classList.toggle('open');
+      const parent = btn.parentElement;
+      parent.classList.toggle('open');
+      const span = btn.querySelector('span');
+      if (span) {
+        span.textContent = parent.classList.contains('open') ? '−' : '+';
       }
     });
+  });
+
+  // Close drawer on link click
+  const navLinks = drawer.querySelectorAll('.mobile-sub-link, .mobile-nav-link:not(.mobile-accordion-btn)');
+  navLinks.forEach(link => {
+    link.addEventListener('click', closeDrawer);
   });
 }
 
 /**
- * RFQ Modal Dialog Handlers
+ * Reusable B2B Request For Quote (RFQ) Modal
  */
 function initRfqModal() {
   const modal = document.getElementById('rfqModal');
   if (!modal) return;
 
+  const openBtns = document.querySelectorAll('[data-open-rfq]');
   const closeBtn = modal.querySelector('.modal-close-btn');
-  const openButtons = document.querySelectorAll('[data-open-rfq]');
-  const productSelect = document.getElementById('rfqProductSelect');
+  const productSelect = modal.querySelector('#rfqProductSelect');
 
-  function openModal(prefillProduct = '') {
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    if (productSelect && prefillProduct) {
-      productSelect.value = prefillProduct;
-    }
-  }
-
-  function closeModal() {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  openButtons.forEach(btn => {
+  openBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const prod = btn.getAttribute('data-product') || '';
-      openModal(prod);
+      const prefillProduct = btn.dataset.product;
+      if (prefillProduct && productSelect) {
+        for (let i = 0; i < productSelect.options.length; i++) {
+          if (productSelect.options[i].value === prefillProduct) {
+            productSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
     });
   });
+
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
@@ -351,38 +433,42 @@ function initRfqModal() {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
       closeModal();
     }
   });
 }
 
 /**
- * B2B RFQ Form Submission Simulator
+ * B2B Lead & Inquiry Forms Handler
  */
 function initInquiryForms() {
-  const forms = document.querySelectorAll('[data-b2b-form]');
+  const forms = document.querySelectorAll('form[data-b2b-form]');
   forms.forEach(form => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const statusBox = form.closest('.modal-body, .section')?.querySelector('.form-status') || form.querySelector('.form-status');
-      
+      const statusBox = form.closest('.modal-body')
+        ? form.closest('.modal-body').querySelector('.form-status')
+        : form.parentElement.querySelector('.form-status');
+
       const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Submit';
+
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Transmitting Inquiry...';
+        submitBtn.innerHTML = 'Transmitting...';
       }
 
       setTimeout(() => {
-        if (statusBox) {
-          statusBox.textContent = 'Thank you. Your technical requirement has been submitted to the Barjatya Polychem formulation desk. Our engineering team will review and contact you with specifications and sample availability.';
-          statusBox.className = 'form-status success';
-          statusBox.style.display = 'block';
-        }
-        form.reset();
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Transmit Enquiry';
+          submitBtn.innerHTML = originalText;
+        }
+        form.reset();
+        if (statusBox) {
+          statusBox.innerHTML = '<strong>Enquiry Transmitted Successfully.</strong> Our formulation desk in Jaipur will contact you within 24 business hours.';
+          statusBox.className = 'form-status success';
+          statusBox.style.display = 'block';
         }
       }, 700);
     });
