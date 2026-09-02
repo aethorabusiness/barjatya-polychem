@@ -26,7 +26,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 70% center;
+  object-position: center center;
   display: block;
 }
 
@@ -34,20 +34,20 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  /* Left dark gradient for crisp typography contrast; Right side allows stainless-steel machinery to shine */
+  /* Left dark gradient for crisp typography contrast; Right side showcases the 7-color pellet heaps and facility */
   background: linear-gradient(
     90deg,
-    rgba(10, 15, 29, 0.94) 0%,
-    rgba(10, 15, 29, 0.86) 42%,
-    rgba(10, 15, 29, 0.45) 70%,
-    rgba(10, 15, 29, 0.20) 100%
+    rgba(10, 15, 29, 0.90) 0%,
+    rgba(10, 15, 29, 0.72) 42%,
+    rgba(10, 15, 29, 0.30) 70%,
+    rgba(10, 15, 29, 0.10) 100%
   ),
   linear-gradient(
     180deg,
-    rgba(10, 15, 29, 0.6) 0%,
+    rgba(10, 15, 29, 0.50) 0%,
     transparent 20%,
-    transparent 75%,
-    rgba(10, 15, 29, 0.9) 100%
+    transparent 65%,
+    rgba(10, 15, 29, 0.92) 100%
   );
   pointer-events: none;
 }
