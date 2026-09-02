@@ -120,6 +120,66 @@
   flex-wrap: wrap;
 }
 
+/* Hero Institutional Feature Strip */
+.hero-feature-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 15, 29, 0.85) 30%, rgba(10, 15, 29, 0.98) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 0;
+}
+
+.hero-feature-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+.hero-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-gray-200);
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.hero-feature-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-brand-light);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .hero-feature-strip {
+    position: relative;
+    background: var(--color-dark-900);
+    padding: 20px 0;
+  }
+  .hero-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+  }
+  .hero-feature-item {
+    font-size: 0.8125rem;
+  }
+}
+
 /* ==========================================================================
    2. TACTILE MATERIAL STRIP (BELOW HERO)
    ========================================================================== */
