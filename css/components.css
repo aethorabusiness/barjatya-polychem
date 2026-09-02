@@ -2,66 +2,51 @@
    1. HOMEPAGE FINAL HERO: INDUSTRIAL MANUFACTURING B2B HERO
    ========================================================================== */
 
-.hero-b2b-stage {
+.hero-b2b-section {
   position: relative;
   width: 100%;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
   background-color: var(--color-dark-950);
   border-bottom: 3px solid var(--color-brand);
+  padding-top: 84px; /* header height offset */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100svh;
 }
 
-.hero-b2b-bg-wrap {
-  position: absolute;
-  inset: 0;
+@media (min-width: 1025px) {
+  .hero-b2b-section {
+    min-height: 680px;
+    height: min(800px, calc(100vh - 84px));
+    padding-top: 84px;
+  }
+}
+
+.hero-b2b-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  flex: 1;
   width: 100%;
-  height: 100%;
-  z-index: 1;
 }
 
-.hero-b2b-bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
+@media (min-width: 1025px) {
+  .hero-b2b-grid {
+    grid-template-columns: 48% 52%;
+    align-items: stretch;
+  }
 }
 
-.hero-b2b-overlay {
-  position: absolute;
-  inset: 0;
+/* Left: Text Content */
+.hero-b2b-text-col {
+  display: flex;
+  align-items: center;
+  padding: clamp(32px, 5vw, 64px) clamp(24px, 5vw, 64px);
   z-index: 2;
-  /* Left dark gradient for crisp typography contrast; Right side showcases the 7-color pellet heaps and facility */
-  background: linear-gradient(
-    90deg,
-    rgba(10, 15, 29, 0.90) 0%,
-    rgba(10, 15, 29, 0.72) 42%,
-    rgba(10, 15, 29, 0.30) 70%,
-    rgba(10, 15, 29, 0.10) 100%
-  ),
-  linear-gradient(
-    180deg,
-    rgba(10, 15, 29, 0.50) 0%,
-    transparent 20%,
-    transparent 65%,
-    rgba(10, 15, 29, 0.92) 100%
-  );
-  pointer-events: none;
+  background-color: var(--color-dark-950);
 }
 
-.hero-b2b-content {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  padding-top: 110px;
-  padding-bottom: 100px;
-}
-
-.hero-b2b-left {
-  max-width: 660px;
+.hero-b2b-text-wrap {
+  max-width: 580px;
 }
 
 .hero-eyebrow {
@@ -69,7 +54,7 @@
   align-items: center;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+  font-size: clamp(0.75rem, 0.85vw, 0.875rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -86,7 +71,7 @@
 }
 
 .hero-title-main {
-  font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.03em;
@@ -101,11 +86,10 @@
 }
 
 .hero-lead-text {
-  font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
+  font-size: clamp(1rem, 1.2vw, 1.1875rem);
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.92);
-  margin-bottom: 34px;
-  max-width: 580px;
+  color: rgba(255, 255, 255, 0.90);
+  margin-bottom: 32px;
 }
 
 .hero-cta-actions {
@@ -115,14 +99,70 @@
   flex-wrap: wrap;
 }
 
+/* Right: Hero Media Area */
+.hero-b2b-media-col {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-media {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-dark-900);
+}
+
+@media (max-width: 1024px) {
+  .hero-media {
+    height: clamp(300px, 50vw, 440px);
+    min-height: auto;
+  }
+}
+
+.hero-factory-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-media-gradient-edge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 15, 29, 0.75) 0%,
+    transparent 18%,
+    transparent 85%,
+    rgba(10, 15, 29, 0.35) 100%
+  );
+}
+
+@media (max-width: 1024px) {
+  .hero-media-gradient-edge {
+    background: linear-gradient(
+      180deg,
+      rgba(10, 15, 29, 0.5) 0%,
+      transparent 20%,
+      transparent 80%,
+      rgba(10, 15, 29, 0.6) 100%
+    );
+  }
+}
+
 /* Hero Institutional Feature Strip */
 .hero-feature-strip {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  width: 100%;
   z-index: 10;
-  background: linear-gradient(180deg, transparent 0%, rgba(10, 15, 29, 0.85) 30%, rgba(10, 15, 29, 0.98) 100%);
+  background-color: var(--color-dark-900);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 16px 0;
 }
@@ -136,34 +176,35 @@
 }
 
 @media (max-width: 900px) {
-  .hero-b2b-stage {
-    min-height: auto;
-    padding-top: 84px;
-  }
-  .hero-b2b-bg-img {
-    object-position: center center;
-  }
-  .hero-b2b-overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(10, 15, 29, 0.85) 0%,
-      rgba(10, 15, 29, 0.94) 100%
-    );
-  }
-  .hero-b2b-content {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-  .hero-feature-strip {
-    position: relative;
-    background: var(--color-dark-900);
-    padding: 20px 0;
-  }
   .hero-feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 14px;
   }
+}
+
+.hero-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-gray-200);
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.hero-feature-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-brand-light);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
 }
 
 .hero-feature-item {

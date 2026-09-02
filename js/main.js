@@ -99,7 +99,7 @@ function initHeroVideo() {
  */
 function initScrollHeader() {
   const header = document.querySelector('.site-header');
-  const heroBg = document.querySelector('.hero-b2b-bg-img') || document.querySelector('.hero-video-bg');
+  const heroBg = document.querySelector('.hero-factory-img') || document.querySelector('.hero-b2b-bg-img') || document.querySelector('.hero-video-bg');
   if (!header) return;
 
   let ticking = false;
