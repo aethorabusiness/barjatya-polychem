@@ -299,55 +299,64 @@ img {
 }
 
 /* White Brand Block */
-.brand-block-link {
+.brand-block-link,
+.footer-brand .brand-block-link,
+.site-header .brand-block-link {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background-color: #FFFFFF;
+  background-color: #FFFFFF !important;
   padding: 8px 18px;
   border-radius: var(--radius-xs);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
   text-decoration: none;
-  border-left: 3px solid var(--color-brand);
+  border-left: 3px solid var(--color-brand) !important;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
   flex-shrink: 0;
 }
 
-.brand-block-link:hover {
+.brand-block-link:hover,
+.footer-brand .brand-block-link:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
 }
 
 .brand-block-link .brand-logo-img,
-.brand-block-link .logo-img {
+.brand-block-link .logo-img,
+.footer-brand .brand-block-link .brand-logo-img,
+.footer-brand .brand-block-link .logo-img {
   width: 42px;
   height: 42px;
   object-fit: contain;
   display: block;
+  filter: none !important;
 }
 
-.brand-block-link .logo-text {
+.brand-block-link .logo-text,
+.footer-brand .brand-block-link .logo-text {
   display: flex;
   flex-direction: column;
 }
 
-.brand-block-link .logo-name {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 1.0625rem;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--color-dark-900);
+.brand-block-link .logo-name,
+.footer-brand .brand-block-link .logo-name {
+  font-family: var(--font-heading) !important;
+  font-weight: 800 !important;
+  font-size: 1.0625rem !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.1 !important;
+  color: #0A0F1D !important;
 }
 
-.brand-block-link .logo-sub {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-gray-600);
-  margin-top: 2px;
+.brand-block-link .logo-sub,
+.footer-brand .brand-block-link .logo-sub {
+  font-family: var(--font-mono) !important;
+  font-size: 0.625rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #475569 !important;
+  margin-top: 2px !important;
 }
 
 /* Legacy Brand Logo support */
@@ -719,7 +728,7 @@ img {
   filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
 }
 
-.footer-brand .logo-name {
+.footer-brand .brand-logo .logo-name {
   color: var(--color-white);
 }
 
