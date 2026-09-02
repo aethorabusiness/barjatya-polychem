@@ -5,24 +5,27 @@
 .hero-b2b-section {
   position: relative;
   width: 100%;
-  width: 100vw;
   max-width: 100%;
   margin: 0;
   padding: 0;
   padding-top: 84px; /* Header height offset */
-  min-height: 100svh;
+  min-height: 680px;
+  height: min(780px, calc(100vh - 80px));
   display: flex;
   align-items: center;
   overflow: hidden;
   background-color: var(--color-dark-950);
+  background-image: url('../assets/images/hero_factory_compounding.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   border-bottom: 3px solid var(--color-brand);
 }
 
 @media (min-width: 1025px) {
   .hero-b2b-section {
     min-height: 680px;
-    height: calc(100vh - 84px);
-    max-height: 840px;
+    height: min(780px, calc(100vh - 80px));
   }
 }
 
