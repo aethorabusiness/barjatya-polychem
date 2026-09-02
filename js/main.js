@@ -99,7 +99,7 @@ function initHeroVideo() {
  */
 function initScrollHeader() {
   const header = document.querySelector('.site-header');
-  const heroVideoBg = document.querySelector('.hero-video-bg');
+  const heroBg = document.querySelector('.hero-b2b-bg-img') || document.querySelector('.hero-video-bg');
   if (!header) return;
 
   let ticking = false;
@@ -114,13 +114,11 @@ function initScrollHeader() {
       header.classList.remove('header-scrolled');
     }
 
-    // Hero video subtle depth scale on scroll (1.00 -> 0.98, slight fade)
-    if (heroVideoBg && scrollY < window.innerHeight) {
+    // Hero background subtle depth scale on scroll (1.00 -> 0.98)
+    if (heroBg && scrollY < window.innerHeight) {
       const factor = scrollY / window.innerHeight;
-      const scale = 1.0 - factor * 0.02; // 1.00 -> 0.98
-      const opacity = 1.0 - factor * 0.08; // 1.00 -> 0.92
-      heroVideoBg.style.transform = `scale(${scale})`;
-      heroVideoBg.style.opacity = `${opacity}`;
+      const scale = 1.0 - factor * 0.02;
+      heroBg.style.transform = `scale(${scale})`;
     }
 
     ticking = false;

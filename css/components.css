@@ -1,71 +1,66 @@
 /* ==========================================================================
-   1. HOMEPAGE FINAL HERO: FULL-SCREEN MACRO POLYMER VIDEO (100svh)
+   1. HOMEPAGE FINAL HERO: INDUSTRIAL MANUFACTURING B2B HERO
    ========================================================================== */
 
-.hero-video-stage {
+.hero-b2b-stage {
   position: relative;
   width: 100%;
-  height: 100svh;
-  min-height: 600px;
+  min-height: 100svh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   overflow: hidden;
   background-color: var(--color-dark-950);
   border-bottom: 3px solid var(--color-brand);
 }
 
-.hero-video-bg {
+.hero-b2b-bg-wrap {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s ease-in, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 
-.hero-video-bg.is-loaded {
-  opacity: 1;
+.hero-b2b-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% center;
+  display: block;
 }
 
-.hero-video-overlay {
+.hero-b2b-overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
-  /* Left-weighted dark vignette to preserve text contrast while leaving the right macro pellets visible */
+  /* Left dark gradient for crisp typography contrast; Right side allows stainless-steel machinery to shine */
   background: linear-gradient(
     90deg,
-    rgba(10, 15, 29, 0.88) 0%,
-    rgba(10, 15, 29, 0.72) 36%,
-    rgba(10, 15, 29, 0.42) 65%,
-    rgba(10, 15, 29, 0.22) 100%
+    rgba(10, 15, 29, 0.94) 0%,
+    rgba(10, 15, 29, 0.86) 42%,
+    rgba(10, 15, 29, 0.45) 70%,
+    rgba(10, 15, 29, 0.20) 100%
   ),
   linear-gradient(
     180deg,
-    rgba(10, 15, 29, 0.55) 0%,
-    transparent 25%,
+    rgba(10, 15, 29, 0.6) 0%,
+    transparent 20%,
     transparent 75%,
-    rgba(10, 15, 29, 0.75) 100%
+    rgba(10, 15, 29, 0.9) 100%
   );
   pointer-events: none;
 }
 
-.hero-video-content {
+.hero-b2b-content {
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: var(--container-ultra);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(24px, 8vw, 110px);
-  padding-right: clamp(20px, 4vw, 40px);
-  padding-top: 84px;
+  padding-top: 110px;
+  padding-bottom: 100px;
 }
 
-.hero-overlay-box {
+.hero-b2b-left {
   max-width: 660px;
 }
 
@@ -91,9 +86,9 @@
 }
 
 .hero-title-main {
-  font-size: clamp(2.8rem, 5.6vw, 5.2rem);
+  font-size: clamp(2.4rem, 4.8vw, 4.2rem);
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.03em;
   color: var(--color-white);
   text-transform: uppercase;
@@ -106,7 +101,7 @@
 }
 
 .hero-lead-text {
-  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  font-size: clamp(1.0625rem, 1.25vw, 1.25rem);
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.92);
   margin-bottom: 34px;
@@ -138,6 +133,37 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px 20px;
+}
+
+@media (max-width: 900px) {
+  .hero-b2b-stage {
+    min-height: auto;
+    padding-top: 84px;
+  }
+  .hero-b2b-bg-img {
+    object-position: center center;
+  }
+  .hero-b2b-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(10, 15, 29, 0.85) 0%,
+      rgba(10, 15, 29, 0.94) 100%
+    );
+  }
+  .hero-b2b-content {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  .hero-feature-strip {
+    position: relative;
+    background: var(--color-dark-900);
+    padding: 20px 0;
+  }
+  .hero-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+  }
 }
 
 .hero-feature-item {
