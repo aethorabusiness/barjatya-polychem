@@ -15,10 +15,6 @@
   align-items: center;
   overflow: hidden;
   background-color: var(--color-dark-950);
-  background-image: url('../assets/images/hero_factory_compounding.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   border-bottom: 3px solid var(--color-brand);
 }
 
@@ -27,6 +23,8 @@
     min-height: 680px;
     height: min(780px, calc(100vh - 80px));
   }
+}
+
 .hero-background {
   position: absolute;
   inset: 0;
