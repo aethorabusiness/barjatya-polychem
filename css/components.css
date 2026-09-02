@@ -15,6 +15,17 @@
   align-items: center;
   overflow: hidden;
   background-color: var(--color-dark-950);
+  background-image: linear-gradient(
+    90deg,
+    rgba(10, 15, 29, 0.88) 0%,
+    rgba(10, 15, 29, 0.72) 38%,
+    rgba(10, 15, 29, 0.35) 65%,
+    rgba(10, 15, 29, 0.08) 100%
+  ),
+  url('../assets/images/hero_factory_compounding.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   border-bottom: 3px solid var(--color-brand);
 }
 
@@ -23,40 +34,6 @@
     min-height: 680px;
     height: min(780px, calc(100vh - 80px));
   }
-}
-
-.hero-background {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../assets/images/hero_factory_compounding.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  z-index: 0;
-}
-
-/* Left-Weighted Dark Vignette Overlay for Text Legibility */
-.hero-bg-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    90deg,
-    rgba(10, 15, 29, 0.88) 0%,
-    rgba(10, 15, 29, 0.72) 38%,
-    rgba(10, 15, 29, 0.35) 65%,
-    rgba(10, 15, 29, 0.08) 100%
-  ),
-  linear-gradient(
-    180deg,
-    rgba(10, 15, 29, 0.45) 0%,
-    transparent 20%,
-    transparent 70%,
-    rgba(10, 15, 29, 0.70) 100%
-  );
-  pointer-events: none;
 }
 
 /* Hero Content Stage */
