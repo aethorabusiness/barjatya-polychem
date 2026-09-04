@@ -42,6 +42,7 @@
   --font-mono: 'JetBrains Mono', monospace;
   
   /* Fluid Content Widths */
+  --header-height: 84px;
   --container-max: 1440px;
   --container-ultra: 1600px;
   --container-fluid: min(92%, 1440px);
@@ -294,8 +295,8 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 84px;
-  gap: 24px;
+  height: var(--header-height, 84px);
+  gap: clamp(10px, 1.2vw, 24px);
 }
 
 /* White Brand Block */
@@ -304,9 +305,9 @@ img {
 .site-header .brand-block-link {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(8px, 0.8vw, 12px);
   background-color: #FFFFFF !important;
-  padding: 8px 18px;
+  padding: 6px clamp(10px, 1vw, 18px);
   border-radius: var(--radius-xs);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
   text-decoration: none;
@@ -342,7 +343,7 @@ img {
 .footer-brand .brand-block-link .logo-name {
   font-family: var(--font-heading) !important;
   font-weight: 800 !important;
-  font-size: 1.0625rem !important;
+  font-size: 1.0625rem;
   letter-spacing: -0.02em !important;
   line-height: 1.1 !important;
   color: #0A0F1D !important;
@@ -351,7 +352,7 @@ img {
 .brand-block-link .logo-sub,
 .footer-brand .brand-block-link .logo-sub {
   font-family: var(--font-mono) !important;
-  font-size: 0.625rem !important;
+  font-size: 0.625rem;
   font-weight: 600 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
@@ -405,20 +406,21 @@ img {
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: clamp(1px, 0.25vw, 4px);
 }
 
 .nav-link {
-  font-size: 0.9375rem;
+  font-size: clamp(0.8125rem, 0.85vw, 0.9375rem);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  padding: 10px 14px;
+  padding: 8px clamp(7px, 0.75vw, 14px);
   border-radius: var(--radius-xs);
   transition: all var(--transition-fast);
   display: flex;
   align-items: center;
   gap: 4px;
+  white-space: nowrap;
 }
 
 .nav-link:hover,
@@ -499,16 +501,20 @@ img {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .mobile-toggle-btn {
   display: none;
-  background: none;
-  border: 1px solid var(--color-border);
+  background: rgba(10, 15, 29, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-xs);
   padding: 8px;
   cursor: pointer;
-  color: var(--color-dark-900);
+  color: var(--color-white);
+  flex-shrink: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 /* Buttons & CTAs */
@@ -1013,7 +1019,7 @@ img {
 }
 
 /* Responsive Breakpoints */
-@media (max-width: 1180px) {
+@media (max-width: 1200px) {
   .main-nav {
     display: none;
   }
@@ -1036,6 +1042,44 @@ img {
   }
 }
 
+@media (max-width: 768px) {
+  :root {
+    --header-height: 72px;
+  }
+  .header-inner {
+    height: 72px;
+  }
+  .brand-block-link,
+  .site-header .brand-block-link {
+    padding: 4px 10px;
+    gap: 8px;
+  }
+  .brand-block-link .brand-logo-img,
+  .brand-block-link .logo-img {
+    width: 32px;
+    height: 32px;
+  }
+  .brand-block-link .logo-name {
+    font-size: 0.875rem !important;
+  }
+  .brand-block-link .logo-sub {
+    font-size: 0.5rem !important;
+  }
+  .mobile-toggle-btn {
+    color: var(--color-white);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(10, 15, 29, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-block-link .logo-sub {
+    display: none !important;
+  }
+}
+
 @media (max-width: 640px) {
   .footer-grid {
     grid-template-columns: 1fr;
@@ -1043,9 +1087,6 @@ img {
   }
   .stats-grid {
     grid-template-columns: 1fr;
-  }
-  .header-inner {
-    height: 72px;
   }
   .footer-bottom-inner {
     flex-direction: column;
