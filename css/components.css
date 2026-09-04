@@ -1055,3 +1055,61 @@ textarea.form-control {
     min-height: 300px;
   }
 }
+
+/* ==========================================================================
+   ABOUT HERO: TWO-COLUMN LAYOUT (LEFT TEXT 55-60%, RIGHT FACTORY IMAGE 40-45%)
+   ========================================================================== */
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+  margin-top: 12px;
+}
+
+.about-hero-content {
+  width: 100%;
+}
+
+.about-hero-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  max-height: 380px;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.about-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .about-hero-grid {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 28px;
+  }
+  .about-hero-media {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .about-hero-media {
+    width: 100%;
+    height: clamp(280px, 65vw, 350px);
+    max-height: 350px;
+  }
+}
