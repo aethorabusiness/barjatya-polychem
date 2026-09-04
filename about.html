@@ -14,8 +14,66 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/main.css?v=2.4">
-  <link rel="stylesheet" href="css/components.css?v=2.4">
+  <link rel="stylesheet" href="css/main.css?v=2.5">
+  <link rel="stylesheet" href="css/components.css?v=2.5">
+
+  <style>
+    /* Critical About Hero Grid */
+    .about-hero-content {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) !important;
+      gap: 50px !important;
+      align-items: center !important;
+      width: 100% !important;
+      margin-top: 16px !important;
+    }
+    .about-hero-copy {
+      width: 100% !important;
+    }
+    .about-hero-image {
+      position: relative !important;
+      width: 100% !important;
+      height: 440px !important;
+      min-height: 420px !important;
+      max-height: 480px !important;
+      border-radius: var(--radius-xs, 2px) !important;
+      overflow: hidden !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+      display: block !important;
+    }
+    .about-hero-image img,
+    .about-hero-img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      display: block !important;
+    }
+    @media (max-width: 1024px) {
+      .about-hero-content {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) !important;
+        gap: 32px !important;
+      }
+      .about-hero-image {
+        height: 380px !important;
+        min-height: 360px !important;
+      }
+    }
+    @media (max-width: 768px) {
+      .about-hero-content {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+        margin-top: 20px !important;
+      }
+      .about-hero-image {
+        width: 100% !important;
+        height: clamp(280px, 65vw, 350px) !important;
+        min-height: 280px !important;
+        max-height: 350px !important;
+      }
+    }
+  </style>
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -141,22 +199,22 @@
   </div>
 
   <!-- Hero -->
-  <section class="page-hero">
+  <section class="page-hero about-hero">
     <div class="content-container">
       <div class="breadcrumbs">
         <a href="index.html">Home</a>
         <span class="breadcrumbs-separator">/</span>
         <span class="breadcrumbs-current">About Us</span>
       </div>
-      <div class="about-hero-grid">
-        <div class="about-hero-content">
+      <div class="about-hero-inner about-hero-content">
+        <div class="about-hero-copy">
           <span class="section-eyebrow">Company Profile</span>
           <h1 class="page-hero-title">About Barjatya Polychem</h1>
           <p class="page-hero-lead">
             ISO 9001:2015 certified masterbatch manufacturer established in 2024, operating an 1,800 MT/year facility in Jaipur, Rajasthan, India.
           </p>
         </div>
-        <div class="about-hero-media">
+        <div class="about-hero-image">
           <img src="assets/images/factory_facility.jpg" alt="Barjatya Polychem Manufacturing Plant Facility in Jaipur" class="about-hero-img" width="800" height="533" loading="eager">
         </div>
       </div>
