@@ -14,8 +14,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/main.css?v=3.0">
+  <link rel="stylesheet" href="css/components.css?v=3.0">
 
   <script type="application/ld+json">
   {
@@ -81,7 +81,7 @@
 
       <div class="header-actions">
         <a href="contact.html" class="btn btn-primary btn-sm btn-quote">Enquire Now</a>
-        <button class="mobile-toggle-btn" aria-label="Open Navigation Menu">
+        <button type="button" class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Open Navigation Menu" aria-expanded="false" aria-controls="mobileNavDrawer">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
         </button>
       </div>
@@ -90,13 +90,13 @@
 
   <!-- Mobile Drawer -->
   <div class="mobile-drawer-overlay"></div>
-  <div class="mobile-nav-drawer">
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
     <div class="mobile-nav-header">
       <div class="brand-logo">
         <img src="assets/images/logo.png" alt="Barjatya Polychem Logo" class="brand-logo-img" width="48" height="48">
         <div class="logo-text"><span class="logo-name">BARJATYA POLYCHEM</span></div>
       </div>
-      <button class="mobile-close-btn" aria-label="Close Menu">
+      <button type="button" class="mobile-close-btn" aria-label="Close Menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
       </button>
     </div>
@@ -334,6 +334,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=3.0"></script>
 </body>
 </html>

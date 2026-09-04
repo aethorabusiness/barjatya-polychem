@@ -5,34 +5,41 @@
  * interactive product presentation, sticky manufacturing storytelling, and horizontal application rail.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   'use strict';
 
-  // 1. Initialize Viewport Reveals
+  // 1. Initialize Mobile Navigation Drawer FIRST so navigation is immediately interactive
+  initMobileNav();
+
+  // 2. Initialize Viewport Reveals
   initScrollReveals();
 
-  // 2. Initialize Full-Screen Polymer Video Hero
+  // 3. Initialize Full-Screen Polymer Video Hero
   initHeroVideo();
 
-  // 3. Initialize Transparent-to-Solid Header & Hero Scroll Depth
+  // 4. Initialize Transparent-to-Solid Header & Hero Scroll Depth
   initScrollHeader();
 
-  // 4. Initialize Interactive Product Presentation (Left Nav, Right Sliding Visual)
+  // 5. Initialize Interactive Product Presentation (Left Nav, Right Sliding Visual)
   initProductShowcase();
 
-  // 5. Initialize Sticky Manufacturing Lifecycle Observer
+  // 6. Initialize Sticky Manufacturing Lifecycle Observer
   initManufacturingObserver();
 
-  // 6. Initialize Horizontal Application Rail (Drag & Touch)
+  // 7. Initialize Horizontal Application Rail (Drag & Touch)
   initAppRail();
-
-  // 7. Initialize Mobile Navigation Drawer
-  initMobileNav();
 
   // 8. Initialize B2B RFQ Modal & Form Handlers
   initRfqModal();
   initInquiryForms();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+
 
 /**
  * Viewport Reveal Observer (Aeronex-Style clip-path & text reveals)
@@ -287,6 +294,7 @@ function initAppRail() {
 
 /**
  * Mobile Navigation Drawer Toggle & Accordion Submenus
+ * Authoritative Single-State Controller (mobileMenuOpen)
  */
 function initMobileNav() {
   const toggleBtn = document.querySelector('.mobile-toggle-btn');
@@ -294,42 +302,111 @@ function initMobileNav() {
   const drawer = document.querySelector('.mobile-nav-drawer');
   const overlay = document.querySelector('.mobile-drawer-overlay');
 
-  if (!toggleBtn || !drawer || !overlay) return;
-
-  function openDrawer() {
-    drawer.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
+  if (!toggleBtn || !drawer || !overlay) {
+    console.warn('[Nav] Mobile elements missing:', { toggleBtn: !!toggleBtn, drawer: !!drawer, overlay: !!overlay });
+    return;
   }
 
-  function closeDrawer() {
-    drawer.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
+  let mobileMenuOpen = false;
+
+  // Set accessible attributes
+  toggleBtn.setAttribute('type', 'button');
+  toggleBtn.setAttribute('aria-expanded', 'false');
+  toggleBtn.setAttribute('aria-controls', 'mobileNavDrawer');
+  if (!drawer.id) drawer.id = 'mobileNavDrawer';
+
+  function setMobileMenuState(isOpen) {
+    mobileMenuOpen = Boolean(isOpen);
+
+    if (mobileMenuOpen) {
+      drawer.classList.add('open', 'active');
+      overlay.classList.add('open', 'active');
+      toggleBtn.classList.add('open', 'active');
+      document.body.classList.add('menu-open');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    } else {
+      drawer.classList.remove('open', 'active');
+      overlay.classList.remove('open', 'active');
+      toggleBtn.classList.remove('open', 'active');
+      document.body.classList.remove('menu-open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
   }
 
-  toggleBtn.addEventListener('click', openDrawer);
-  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-  overlay.addEventListener('click', closeDrawer);
+  function handleToggle(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    console.log("MOBILE MENU BUTTON CLICKED | Previous state:", mobileMenuOpen);
+    setMobileMenuState(!mobileMenuOpen);
+    console.log("MOBILE MENU RESULTING STATE:", mobileMenuOpen);
+  }
 
-  // Accordion toggle in mobile menu
+  // Hamburger button toggles menu (binds click)
+  toggleBtn.addEventListener('click', handleToggle);
+
+  // Close button inside drawer closes menu
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("[Nav] Close 'X' button tapped");
+      setMobileMenuState(false);
+    });
+  }
+
+  // Backdrop overlay click closes menu
+  overlay.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log("[Nav] Overlay tapped");
+    setMobileMenuState(false);
+  });
+
+  // ESC key closes menu
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenuOpen) {
+      setMobileMenuState(false);
+    }
+  });
+
+  // Accordion toggle for Products submenu in mobile drawer
   const accordions = drawer.querySelectorAll('.mobile-accordion-btn');
   accordions.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       const parent = btn.parentElement;
-      parent.classList.toggle('open');
+      if (!parent) return;
+
+      const submenu = parent.querySelector('.mobile-sub-menu');
+      const isOpen = parent.classList.contains('open') || parent.classList.contains('active');
+
+      if (isOpen) {
+        parent.classList.remove('open', 'active');
+        if (submenu) submenu.classList.remove('open', 'active');
+      } else {
+        parent.classList.add('open', 'active');
+        if (submenu) submenu.classList.add('open', 'active');
+      }
+
       const span = btn.querySelector('span');
       if (span) {
-        span.textContent = parent.classList.contains('open') ? '−' : '+';
+        span.textContent = isOpen ? '+' : '−';
       }
+      console.log("[Nav] Products accordion toggled, open =", !isOpen);
     });
   });
 
-  // Close drawer on link click
+  // Close drawer when clicking any actual navigation link
   const navLinks = drawer.querySelectorAll('.mobile-sub-link, .mobile-nav-link:not(.mobile-accordion-btn)');
   navLinks.forEach(link => {
-    link.addEventListener('click', closeDrawer);
+    link.addEventListener('click', () => {
+      console.log("[Nav] Navigation link tapped:", link.getAttribute('href'));
+      setMobileMenuState(false);
+    });
   });
 }
 

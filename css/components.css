@@ -1118,3 +1118,31 @@ textarea.form-control {
     max-height: 350px;
   }
 }
+
+/* ==========================================================================
+   MOBILE NAVIGATION DRAWER & ACCORDION (UNIFIED SYSTEM)
+   ========================================================================== */
+.mobile-nav-drawer.open,
+.mobile-nav-drawer.active,
+body.menu-open .mobile-nav-drawer {
+  transform: translateX(0) !important;
+}
+
+.mobile-drawer-overlay.open,
+.mobile-drawer-overlay.active,
+body.menu-open .mobile-drawer-overlay {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.mobile-sub-menu.open,
+.mobile-sub-menu.active,
+.mobile-nav-item.open > .mobile-sub-menu,
+.mobile-nav-item.active > .mobile-sub-menu {
+  display: block !important;
+}
+
+.mobile-toggle-btn svg {
+  pointer-events: none;
+}
