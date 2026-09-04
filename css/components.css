@@ -22,7 +22,7 @@
     rgba(10, 15, 29, 0.10) 65%,
     transparent 100%
   ),
-  url('../assets/images/hero_factory_compounding.jpg');
+  url('../assets/images/polymer_pellets_hero.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -114,7 +114,7 @@
       rgba(10, 15, 29, 0.65) 45%,
       rgba(10, 15, 29, 0.85) 100%
     ),
-    url('../assets/images/hero_factory_compounding.jpg');
+    url('../assets/images/polymer_pellets_hero.jpg');
   }
   .hero-content-stage {
     padding-bottom: 48px;
