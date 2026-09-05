@@ -13,9 +13,9 @@ Official multi-page website for **Barjatya Polychem (BP)**, an ISO 9001:2015 cer
 ## 📦 Product Portfolio
 1. **Colour Masterbatch**: Standard shades, bespoke RAL/Pantone matching, metallic, pearlescent, thermochromic, and outdoor weatherable grades.
 2. **Black Masterbatch**: Furnace carbon black concentrates (30%–50% loading) for IS 4984 pipes, blown films, and high-jetness moulding.
-3. **White Masterbatch**: High-opacity Rutile $TiO_2$ concentrates (up to 75% loading) for barrier films, lamination, and moulding.
+3. **White Masterbatch**: High-opacity Rutile TiO₂ concentrates (up to 75% loading) for barrier films, lamination, and moulding.
 4. **Additive Masterbatch**: Optical brighteners, blowing agents, PP clarifiers, antistatic, UV stabilizers, antioxidants, PPA, slip, antiblock, and flame retardants.
-5. **Filler Compounds**: Calcium Carbonate ($CaCO_3$) mineral compounds (up to 80% loading) for PP woven sacks (anti-fibrillation) and cycle time reduction.
+5. **Filler Compounds**: Calcium Carbonate (CaCO₃) mineral compounds (up to 80% loading) for PP woven sacks (anti-fibrillation) and cycle time reduction.
 
 ## 🌐 Site Architecture
 - `index.html` - Corporate Homepage
